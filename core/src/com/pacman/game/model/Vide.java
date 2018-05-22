@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.view.TextureFactory;
 
-public class Block extends GameElement{
+public class Vide extends GameElement{
 
-    public Block(Vector2 position, World world){
+    public Vide(Vector2 position, World world){
         super(position,world);
     }
 
@@ -17,7 +17,7 @@ public class Block extends GameElement{
 
     @Override
     public String toString() {
-        return "Block [position=" + _pos + ", world=" + _world + "]";
+        return "Vide [position=" + _pos + ", world=" + _world + "]";
     }
 
     @Override

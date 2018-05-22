@@ -2,9 +2,10 @@ package com.pacman.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.pacman.game.model.World;
 import com.pacman.game.view.TextureFactory;
-import com.pacman.game.view.WorldRenderer;
+import com.pacman.game.controller.WorldRenderer;
 
 public class GameScreen implements Screen {
 
@@ -20,7 +21,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 0);
         this._worldRenderer.render(delta);
     }

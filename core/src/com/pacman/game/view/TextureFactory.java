@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pacman.game.model.GameElement;
 import com.pacman.game.model.Pacman;
 import com.pacman.game.model.Block;
+import com.pacman.game.model.Vide;
 
 import java.util.HashMap;
 
@@ -19,8 +20,9 @@ public class TextureFactory
     private TextureFactory()
     {
         _textures = new HashMap<Class<?>, Texture>();
-        _textures.put(Pacman.class, new Texture(Gdx.files.internal("images/pacman.png")));
-        _textures.put(Block.class, new Texture(Gdx.files.internal("images/bloc.png")));
+        _textures.put(Pacman.class, new Texture(Gdx.files.internal("pacman-3.png")));
+        _textures.put(Block.class, new Texture(Gdx.files.internal("bloc.png")));
+        _textures.put(Vide.class, new Texture(Gdx.files.internal("dark.png")));
     }
 
     static public void reset()
@@ -36,6 +38,6 @@ public class TextureFactory
     }
 
     public Texture getTexture(Class<? extends GameElement> aClass) {
-        return null;
+        return _textures.get(aClass);
     }
 }

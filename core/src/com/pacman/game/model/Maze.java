@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.pacman.game.model.COR.MazeCOR;
 
-public class Maze {
+public class Maze implements Iterable<GameElement>{
     /* 0 : mur, 1 : vide, 2 : intersection, 3 : barriere fantomes */
     private World _world;
     private int _height;
@@ -57,6 +57,11 @@ public class Maze {
         this.init ();
     }
 
+    @Override
+    public Iterator<GameElement> iterator() {
+        return new MazeIterator(this);
+    }
+
     private void init ()
     {
         this._height = _laby1.length;
@@ -67,12 +72,12 @@ public class Maze {
         for(int[] t : _laby1) {
             for(int elementType : t) {
                 GameElement element = MazeCOR.getCOR ().build (
-                        this.world,
+                        this._world,
                         elementType,
                         x,
                         y);
-                this.maze[x][y] = element;
-                y = (++y % this.width);
+                this._laby2[x][y] = element;
+                y = (++y % this._width);
             }
             x++;
         }

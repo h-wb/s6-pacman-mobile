@@ -17,11 +17,13 @@ public abstract class GameElement {
 
     public abstract Vector2 getPosition();
 
+    public abstract void setPosition(Vector2 v);
+
     public abstract int getWidth();
 
     public abstract int getHeight();
 
-    public abstract Texture getTexture();
+   // public abstract Texture getTexture();
 
     public abstract String toString();
 }

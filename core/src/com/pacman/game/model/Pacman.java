@@ -7,38 +7,43 @@ import com.pacman.game.view.TextureFactory;
 public class Pacman extends GameElement
 {
 
-    Vector2 position;
-    World world;
-
     public Pacman(Vector2 position, World world)
     {
         super(position, world);
     }
 
     public Vector2 getPosition() {
-        return position;
+        return _pos;
     }
 
+    @Override
     public void setPosition(Vector2 position) {
-        this.position = position;
+        this._pos = position;
+    }
+
+    @Override
+    public int getWidth() {
+        return 1;
+    }
+
+    @Override
+    public int getHeight() {
+        return 1;
     }
 
     public World getWorld() {
-        return world;
+        return _world;
     }
 
     public void setWorld(World world) {
-        this.world = world;
-    }
-
-    public Texture getTexture() {
-        return TextureFactory.getTextureInstance().getTexturePacman();
+        this._world = world;
     }
 
     @Override
     public String toString() {
-        return "Pacman [position=" + position + ", world=" + world + "]";
+        return "Pacman [position=" + _pos + ", world=" + _world + "]";
     }
+
 
 
 

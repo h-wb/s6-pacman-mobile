@@ -16,25 +16,27 @@ public class WorldIterator implements Iterator<GameElement>
 
     @Override
     public boolean hasNext() {
-        return (this.i < 1);
+        return (this._i < 1);
     }
 
     @Override
     public GameElement next() {
         if(_i == 0){
-            if (!this.mazeIterator.hasNext())
+            if (!this._mazeIterator.hasNext())
                 _i = 1; // on passe à Pacman
         }
         else _i++;
 
         GameElement res;
-        switch(this.i) {
-            case 0 : return this.mazeIterator.next();
-            case 1 : return this.world.getPacman();
-            default : … /* erreur */
+        switch(this._i) {
+            case 0 : return this._mazeIterator.next();
+            case 1 : return this._world.getPacman();
+            default : return null;  /* erreur */
         }
     }
 
     @Override
-    public void remove() { … }
+    public void remove() {
+
+    }
 }

@@ -1,4 +1,4 @@
-package com.pacman.game.view;
+package com.pacman.game.controller;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +9,7 @@ import com.pacman.game.model.Pacman;
 import com.pacman.game.model.Block;
 import com.pacman.game.model.World;
 import com.pacman.game.model.GameElement;
+import com.pacman.game.view.TextureFactory;
 
 public class WorldRenderer {
 
