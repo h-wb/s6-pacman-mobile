@@ -15,23 +15,22 @@ public class Listener implements InputProcessor {
     }
 
     private void update(Vector2 vel){
-        _world.getPacman().setVelocity(vel);
+        _world.getPacman().setNextVelocity(vel);
     }
 
     @Override
     public boolean keyDown(int keycode) {
         float moveAmount = 0.1f;
-        if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
-            moveAmount = 0.1f;
-
-        if(keycode == Input.Keys.LEFT)
-            update(new Vector2(-moveAmount,0));
-        if(keycode == Input.Keys.RIGHT)
-            update(new Vector2(+moveAmount,0));
         if(keycode == Input.Keys.UP)
-            update(new Vector2(0,+moveAmount));
+            update(new Vector2(0,moveAmount));
         if(keycode == Input.Keys.DOWN)
             update(new Vector2(0,-moveAmount));
+        if(keycode == Input.Keys.RIGHT) {
+            update(new Vector2(moveAmount,0));
+        }
+        if(keycode == Input.Keys.LEFT) {
+            update(new Vector2(-moveAmount,0));
+        }
         return true;
     }
 
