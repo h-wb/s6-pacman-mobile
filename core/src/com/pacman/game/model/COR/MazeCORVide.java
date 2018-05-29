@@ -6,6 +6,8 @@ import com.pacman.game.model.GameElement;
 import com.pacman.game.model.Vide;
 import com.pacman.game.model.World;
 
+import java.util.List;
+
 public class MazeCORVide implements MazeCORinterface{
 
     private MazeCORinterface next;

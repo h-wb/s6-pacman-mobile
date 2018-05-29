@@ -2,13 +2,20 @@ package com.pacman.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.view.TextureFactory;
 
 public class Block extends GameElement{
 
+
     public Block(Vector2 position, World world){
         super(position,world);
+        _bounds = new Rectangle(_pos.x, _pos.y, getWidth(), getHeight());
+    }
+
+    public Rectangle getBounds(){
+        return _bounds;
     }
 
     @Override
@@ -32,11 +39,6 @@ public class Block extends GameElement{
     }
 
     @Override
-    public Sprite getSprite() {
-       return null;
-    }
-
-    @Override
     public void setVelocity(Vector2 v) {
 
     }
@@ -44,6 +46,8 @@ public class Block extends GameElement{
     @Override
     public void setPosition(Vector2 v) {
         _pos = v;
+        _bounds.setX(v.x);
+        _bounds.setY(v.y);
     }
 
     @Override

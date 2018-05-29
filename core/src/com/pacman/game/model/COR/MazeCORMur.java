@@ -5,6 +5,8 @@ import com.pacman.game.model.Block;
 import com.pacman.game.model.GameElement;
 import com.pacman.game.model.World;
 
+import java.util.List;
+
 public class MazeCORMur implements MazeCORinterface{
 
     private MazeCORinterface next;
@@ -18,6 +20,7 @@ public class MazeCORMur implements MazeCORinterface{
     public GameElement build(World w, int elementType, int x, int y) {
         if(elementType == 0){
             return new Block(new Vector2(x,y),w);
+
         }
         else{
            return this.next.build(w, elementType, x, y);

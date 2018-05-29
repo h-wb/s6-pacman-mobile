@@ -1,10 +1,10 @@
 package com.pacman.game.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.pacman.game.model.COR.MazeCOR;
 
 public class Maze implements Iterable<GameElement>{
@@ -88,5 +88,6 @@ public class Maze implements Iterable<GameElement>{
     public int getHeight() { return _height; }
 
     public int getWidth()  { return _width; }
+
 
 }
