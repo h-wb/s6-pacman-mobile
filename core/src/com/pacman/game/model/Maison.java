@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.view.TextureFactory;
 
-public class Vide extends GameElement{
+public class Maison extends GameElement{
 	
-    public Vide(Vector2 position, World world){
+    public Maison(Vector2 position, World world){
         super(position,world);
     }
 
@@ -19,7 +19,7 @@ public class Vide extends GameElement{
 
     @Override
     public String toString() {
-        return "Vide [position=" + _pos + ", world=" + _world + "]";
+        return "Maison [position=" + _pos + ", world=" + _world + "]";
     }
 
     @Override

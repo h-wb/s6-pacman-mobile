@@ -1,14 +1,12 @@
 package com.pacman.game.model;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.pacman.game.view.TextureFactory;
 
-public class Vide extends GameElement{
+public class Pellet extends GameElement{
 	
-    public Vide(Vector2 position, World world){
+    public Pellet(Vector2 position, World world){
         super(position,world);
     }
 
@@ -19,14 +17,13 @@ public class Vide extends GameElement{
 
     @Override
     public String toString() {
-        return "Vide [position=" + _pos + ", world=" + _world + "]";
+        return "Pellet [position=" + _pos + ", world=" + _world + "]";
     }
 
     @Override
     public Vector2 getPosition() {
         return _pos;
     }
-
     @Override
     public void setPosition(Vector2 v) {
         _pos = v;

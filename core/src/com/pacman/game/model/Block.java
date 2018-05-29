@@ -28,21 +28,6 @@ public class Block extends GameElement{
     }
 
     @Override
-    public Vector2 getVelocity() {
-        return null;
-    }
-
-    @Override
-    public Sprite getSprite() {
-       return null;
-    }
-
-    @Override
-    public void setVelocity(Vector2 v) {
-
-    }
-
-    @Override
     public void setPosition(Vector2 v) {
         _pos = v;
     }

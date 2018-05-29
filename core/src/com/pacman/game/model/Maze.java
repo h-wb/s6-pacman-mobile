@@ -81,6 +81,12 @@ public class Maze implements Iterable<GameElement>{
             }
             x++;
         }
+        
+        for(int i=11;i<=16;i++) {
+        	this._laby2[13][i]=new Maison(new Vector2(13,i),_world);
+        	this._laby2[14][i]=new Maison(new Vector2(14,i),_world);
+        }
+        this._laby2[1][1]=new Vide(new Vector2(1,1),_world);
     }
 
     public GameElement get(int x, int y) { return this._laby2[x][y]; }
@@ -88,5 +94,9 @@ public class Maze implements Iterable<GameElement>{
     public int getHeight() { return _height; }
 
     public int getWidth()  { return _width; }
+
+	public void set(int x, int y, GameElement ge) {
+		this._laby2[x][y]=ge;		
+	}
 
 }
