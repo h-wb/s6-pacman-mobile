@@ -12,8 +12,7 @@ public class TextureSuper implements iTexturable
     private double _deltaT;
     private double _seuil;
 
-    public TextureSuper (Super Super, double seuil) {
-        _super = Super;
+    public TextureSuper (double seuil) {
         _deltaT = 0.0;
         _seuil = seuil;
         _texture1 = new Texture(Gdx.files.internal("superpellet.png"));

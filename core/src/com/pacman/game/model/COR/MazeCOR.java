@@ -10,10 +10,12 @@ public class MazeCOR {
             MazeCORinterface c2 = new MazeCORIntersection();
             MazeCORinterface c3 = new MazeCORVide();
             MazeCORinterface c4 = new MazeCORBarriere();
+            MazeCORinterface c5 = new MazeCORSuper();
 
             c1.setNext(c2);
             c2.setNext(c3);
             c3.setNext(c4);
+            c4.setNext(c5);
 
             return c1;
 
