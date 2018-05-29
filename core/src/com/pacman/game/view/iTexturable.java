@@ -1,4 +1,9 @@
 package com.pacman.game.view;
 
-public class iTexturable {
+import com.badlogic.gdx.graphics.Texture;
+
+public interface iTexturable {
+
+    public Texture getTexture ();
+
 }

@@ -1,6 +1,7 @@
 package com.pacman.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.view.TextureFactory;
@@ -27,21 +28,6 @@ public class Vide extends GameElement{
     }
 
     @Override
-    public Vector2 getVelocity() {
-        return null;
-    }
-
-    @Override
-    public Rectangle getBounds() {
-        return null;
-    }
-
-    @Override
-    public void setVelocity(Vector2 v) {
-
-    }
-
-    @Override
     public void setPosition(Vector2 v) {
         _pos = v;
     }
@@ -56,5 +42,8 @@ public class Vide extends GameElement{
         return 1;
     }
 
-
+    @Override
+    public Rectangle getRectangle() {
+        return new Rectangle(_pos.x,_pos.y,getHeight(),getWidth());
+    }
 }

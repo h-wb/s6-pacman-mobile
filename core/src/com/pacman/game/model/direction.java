@@ -1,4 +1,5 @@
 package com.pacman.game.model;
 
-public class direction {
+public enum direction {
+    LEFT ,RIGHT ,UP ,DOWN ,NONE
 }
