@@ -28,7 +28,7 @@ public class TextureFactory
     {
         _world=world;
         _textures = new HashMap<Class<?>, iTexturable>();
-        _textures.put(Pacman.class,new TexturePacman(_world.getPacman (), 1.0));
+        _textures.put(Pacman.class,new TexturePacman(_world.getPacman(),1.0));
         _textures.put(Super.class, new TextureSuper(1.0));
         _textures.put(Block.class, new TextureUnique(new Texture(Gdx.files.internal("bloc.png"))));
         _textures.put(Barriere.class, new TextureUnique(new Texture(Gdx.files.internal("barriere.png"))));

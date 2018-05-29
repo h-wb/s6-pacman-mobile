@@ -3,7 +3,7 @@ package com.pacman.game.model;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Super extends GameElement {
+public class Super extends Pellet {
 
     public Super(Vector2 position, World world){
         super(position,world);

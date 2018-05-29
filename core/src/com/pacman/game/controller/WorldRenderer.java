@@ -12,12 +12,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.model.Pacman;
 import com.pacman.game.model.Pellet;
+import com.pacman.game.model.Super;
 import com.pacman.game.model.Vide;
 import com.pacman.game.model.Block;
 import com.pacman.game.model.World;
 import com.pacman.game.model.GameElement;
 import com.pacman.game.view.TextureFactory;
 import com.pacman.game.view.TexturePacman;
+import com.pacman.game.view.TextureSuper;
 
 public class WorldRenderer {
 
@@ -35,9 +37,10 @@ public class WorldRenderer {
     }
 
     public void render(float delta) {
-        TexturePacman texturePacman =
-                (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
-        texturePacman.render (delta);
+        TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
+        TextureSuper textureSuper = (TextureSuper) TextureFactory.getInstance(world).getTexturable(Super.class);
+        texturePacman.render(delta);
+        textureSuper.render(delta);
 
         this.world.getPacman().deplacement();
         Vector2 pos=this.world.getPacman().getPosition();

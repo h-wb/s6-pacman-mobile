@@ -15,7 +15,7 @@ public class Listener implements InputProcessor {
     }
 
     private void update(Vector2 vel){
-        _world.getPacman().setVelocity(vel);
+        _world.getPacman().setNextVelocity(vel);
     }
 
     @Override

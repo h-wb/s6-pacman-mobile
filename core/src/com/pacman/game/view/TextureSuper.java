@@ -7,7 +7,6 @@ import com.pacman.game.model.direction;
 
 public class TextureSuper implements iTexturable
 {
-    private Super _super;
     private Texture _texture1,_texture2;
     private double _deltaT;
     private double _seuil;
