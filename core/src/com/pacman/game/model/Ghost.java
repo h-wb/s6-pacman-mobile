@@ -63,46 +63,38 @@ public abstract class Ghost extends MoveableElement {
     protected void deplacementAlea(){
         Rectangle rectGe=new Rectangle();
         if(_pos.x%1==0&&_pos.y%1==0) {
-            Vector2 _velTemp=null;
-            GameElement geUp,geDown,geRight,geLeft,ge=null;
-            ArrayList<GameElement> listePossible=new ArrayList<GameElement>();
+            GameElement geUp,geDown,geRight,geLeft;
             ArrayList<Vector2> velocityPossible=new ArrayList<Vector2>();
             float vel=0.1f;
             if(((int)_pos.y+1)<_world.getMaze().getHeight()) {
                 geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
-                if (!(geUp instanceof Block/* || ge instanceof Barriere*/)) {
-                    listePossible.add(geUp);
+                if (!(geUp instanceof Block || geUp instanceof Barriere)) {
                     velocityPossible.add(new Vector2(0, vel));
                 }
             }
             if((int)_pos.y-1>=0) {
                 geDown = _world.getMaze().get((int) _pos.x, (int) _pos.y - 1);
-                if (!(geDown instanceof Block/* || ge instanceof Barriere*/)) {
+                if (!(geDown instanceof Block || geDown instanceof Barriere)) {
                     velocityPossible.add(new Vector2(0, -vel));
-                    listePossible.add(geDown);
                 }
             }
             if(((int)_pos.x+1)<_world.getMaze().getWidth()) {
                 geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
-                if (!(geRight instanceof Block/* || ge instanceof Barriere*/)) {
+                if (!(geRight instanceof Block || geRight instanceof Barriere)) {
                     velocityPossible.add(new Vector2(vel, 0));
-                    listePossible.add(geRight);
                 }
             }
             if(((int)_pos.x-1)>=0) {
                 geLeft = _world.getMaze().get((int) _pos.x - 1, (int) _pos.y);
-                if (!(geLeft instanceof Block/* || ge instanceof Barriere*/)) {
+                if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
                     velocityPossible.add(new Vector2(-vel, 0));
-                    listePossible.add(geLeft);
                 }
             }
 
-            int direction=(int)(Math.random() * (listePossible.size()));
-                ge=listePossible.get(direction);
-                _velTemp=velocityPossible.get(direction);
-                _pos.x = (float) Math.round((_pos.x + _velTemp.x) * 10) / 10;
-                _pos.y = (float) Math.round((_pos.y + _velTemp.y) * 10) / 10;
-                _vel = _velTemp;
+            int direction=(int)(Math.random() * (velocityPossible.size()));
+                _vel=velocityPossible.get(direction);
+                _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
+                _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
         }
         else{
             _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
