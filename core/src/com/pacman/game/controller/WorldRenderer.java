@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.model.Ghost1;
+import com.pacman.game.model.Intersection;
+import com.pacman.game.model.IntersectionPellet;
 import com.pacman.game.model.Pacman;
 import com.pacman.game.model.Pellet;
 import com.pacman.game.model.Super;
@@ -45,7 +47,7 @@ public class WorldRenderer {
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Pellet) {
+            if(ge instanceof Pellet|| ge instanceof IntersectionPellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(pos,this.world));
                 this.score+=10;
             }

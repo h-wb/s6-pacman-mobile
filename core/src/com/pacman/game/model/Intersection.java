@@ -3,7 +3,7 @@ package com.pacman.game.model;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Intersection extends GameElement {
+public class Intersection extends Pellet {
 
     public Intersection(Vector2 pos, World w) {
         super(pos, w);

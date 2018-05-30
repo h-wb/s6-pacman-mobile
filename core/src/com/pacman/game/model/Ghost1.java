@@ -11,22 +11,13 @@ public class Ghost1 extends Ghost {
 
     @Override
     public void deplacement() {
-        deplacementAlea();
-    }
-
-    public Object direction() {
-        if(_vel.x>0) {
-            return direction.RIGHT;
+        GameElement ge=_world.getMaze().get((int) _pos.x,(int) _pos.y);
+        if((_pos.x%1==0&&_pos.y%1==0 )&& (ge instanceof Intersection||ge instanceof Maison)) {
+            deplacementAlea();
         }
-        else if(_vel.x<0) {
-            return direction.LEFT;
+        else{
+            _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
+            _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
         }
-        else if(_vel.y>0) {
-            return direction.UP;
-        }
-        else if(_vel.y<0) {
-            return direction.DOWN;
-        }
-        return direction.NONE;
     }
 }
