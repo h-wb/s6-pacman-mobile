@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public abstract class Ghost extends MoveableElement {
 
+    float vitesse=0.1f;
+
     public Ghost(Vector2 pos, World w) {
         super(pos, w);
         _vel=new Vector2(0,0);
@@ -99,5 +101,41 @@ public abstract class Ghost extends MoveableElement {
             _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
             _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
         }
+    }
+
+    protected void deplacementMinim(){
+            float diff_x= Math.abs(_world.getPacman().getPosition().x - _pos.x);
+            float diff_y= Math.abs(_world.getPacman().getPosition().y - _pos.y);
+            GameElement geUp,geDown,geRight,geLeft;
+            ArrayList<Vector2> velocityPossible=new ArrayList<Vector2>();
+            if(_world.getPacman().getPosition().y > _pos.y && diff_y < diff_x){
+                geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
+                if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                    velocityPossible.add(new Vector2(0, vitesse));
+                }
+            }
+
+            if(_world.getPacman().getPosition().y < _pos.y && diff_y < diff_x){
+                geDown = _world.getMaze().get((int) _pos.x, (int) _pos.y - 1);
+                if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                    velocityPossible.add(new Vector2(0, -vitesse));
+                }
+            }
+
+            if(_world.getPacman().getPosition().x > _pos.x && diff_x < diff_y){
+                geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
+                if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                    velocityPossible.add(new Vector2(vitesse, 0));
+                }
+            }
+
+            if(_world.getPacman().getPosition().x < _pos.x && diff_x < diff_y){
+                geLeft = _world.getMaze().get((int) _pos.x - 1, (int) _pos.y);
+                if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                    velocityPossible.add(new Vector2(-vitesse, 0));
+                }
+            }
+
+
     }
 }

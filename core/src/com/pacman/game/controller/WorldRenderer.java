@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.model.Ghost1;
+import com.pacman.game.model.Ghost2;
 import com.pacman.game.model.Pacman;
 import com.pacman.game.model.Pellet;
 import com.pacman.game.model.Super;
@@ -20,6 +21,7 @@ import com.pacman.game.model.World;
 import com.pacman.game.model.GameElement;
 import com.pacman.game.view.TextureFactory;
 import com.pacman.game.view.TextureGhost1;
+import com.pacman.game.view.TextureGhost2;
 import com.pacman.game.view.TexturePacman;
 import com.pacman.game.view.TextureSuper;
 
@@ -41,6 +43,7 @@ public class WorldRenderer {
     public void render(float delta) {
 
         this.world.getGhost1().deplacement();
+        this.world.getGhost2().deplacement();
         this.world.getPacman().deplacement();
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
@@ -54,9 +57,11 @@ public class WorldRenderer {
         TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
         TextureSuper textureSuper = (TextureSuper) TextureFactory.getInstance(world).getTexturable(Super.class);
         TextureGhost1 textureGhost1 = (TextureGhost1) TextureFactory.getInstance(world).getTexturable(Ghost1.class);
+        TextureGhost2 textureGhost2 = (TextureGhost2) TextureFactory.getInstance(world).getTexturable(Ghost2.class);
         texturePacman.render(delta);
         textureSuper.render(delta);
         textureGhost1.render(delta);
+        textureGhost2.render(delta);
 
         this.spriteBatch.begin();
         for (GameElement element : this.world) {
