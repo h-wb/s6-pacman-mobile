@@ -61,8 +61,7 @@ public abstract class Ghost extends MoveableElement {
     public abstract void deplacement();
 
     protected void deplacementAlea(){
-        Rectangle rectGe=new Rectangle();
-        if(_pos.x%1==0&&_pos.y%1==0) {
+        if((_pos.x%1==0&&_pos.y%1==0 )&& _world.getMaze().get((int) _pos.x,(int) _pos.y) instanceof Intersection) {
             GameElement geUp,geDown,geRight,geLeft;
             ArrayList<Vector2> velocityPossible=new ArrayList<Vector2>();
             float vel=0.1f;
