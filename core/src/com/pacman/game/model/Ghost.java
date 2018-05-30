@@ -90,7 +90,7 @@ public abstract class Ghost extends MoveableElement {
     protected void deplacementAlea(){
         GameElement geUp,geDown,geRight,geLeft;
         ArrayList<Vector2> velocityPossible=new ArrayList<Vector2>();
-        if(((int)_pos.y+1)<_world.getMaze().getHeight()) {
+        if(((int)_pos.y+1)<_world.getMaze().getHeight()-1) {
             geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
             if (!(geUp instanceof Block || geUp instanceof Barriere)) {
                 velocityPossible.add(new Vector2(0, vitesse));
@@ -102,7 +102,7 @@ public abstract class Ghost extends MoveableElement {
                 velocityPossible.add(new Vector2(0, -vitesse));
             }
         }
-        if(((int)_pos.x+1)<_world.getMaze().getWidth()) {
+        if(((int)_pos.x+1)<_world.getMaze().getWidth()-1) {
             geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
             if (!(geRight instanceof Block || geRight instanceof Barriere)) {
                 velocityPossible.add(new Vector2(vitesse, 0));
@@ -116,8 +116,8 @@ public abstract class Ghost extends MoveableElement {
         }
 
         int direction=(int)(Math.random() * (velocityPossible.size()));
-           _vel=velocityPossible.get(direction);
-           _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-           _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+        _vel=velocityPossible.get(direction);
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
     }
 }

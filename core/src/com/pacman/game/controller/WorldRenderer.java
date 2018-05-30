@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Intersection;
 import com.pacman.game.model.IntersectionPellet;
+import com.pacman.game.model.Maison;
 import com.pacman.game.model.Pacman;
 import com.pacman.game.model.Pellet;
 import com.pacman.game.model.Super;
@@ -32,6 +33,7 @@ public class WorldRenderer {
     private BitmapFont font;
     private float ppuX, ppuY;
     private int score;
+    float time=0;
 
     public WorldRenderer(World world) {
         this.world = world;
@@ -41,14 +43,21 @@ public class WorldRenderer {
     }
 
     public void render(float delta) {
-
+        if(barrieres(delta)){
+            this.world.getMaze().set(12,13,new Vide(new Vector2(12,13),world));
+            this.world.getMaze().set(12,14,new Vide(new Vector2(12,14),world));
+        }
         this.world.getGhost1().deplacement();
         this.world.getPacman().deplacement();
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Pellet|| ge instanceof IntersectionPellet) {
+            if(ge instanceof Pellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(pos,this.world));
+                this.score+=10;
+            }
+            if(ge instanceof IntersectionPellet) {
+                this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(pos,this.world));
                 this.score+=10;
             }
         }
@@ -72,6 +81,14 @@ public class WorldRenderer {
         }
         font.draw(spriteBatch,"Score:"+ Integer.toString(score), 0, (this.world.getHeight()+1)*ppuY);
         this.spriteBatch.end();
+    }
+
+    public boolean barrieres(float deltaTime){
+        time += deltaTime;
+        if(time >= 5){
+            return true;
+        }
+        return false;
     }
 
     public void setPpuX(float ppuX) {
