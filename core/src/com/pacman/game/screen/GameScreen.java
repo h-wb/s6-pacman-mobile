@@ -33,7 +33,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         this._worldRenderer.setPpuX(width/(float)this._world.getWidth());
-        this._worldRenderer.setPpuY(height/(float)this._world.getHeight());
+        this._worldRenderer.setPpuY((height/(float)this._world.getHeight())-1);
     }
 
     @Override public void show() { TextureFactory.reset(); }

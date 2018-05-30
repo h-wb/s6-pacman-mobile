@@ -8,12 +8,16 @@ public class World implements Iterable<GameElement>
 {
     private Pacman _pacman;
     private Maze _maze;
+    private Ghost1 _ghost1;
 
     public World() {
         this._pacman = new Pacman(new Vector2(1,1), this);
+        this._ghost1 = new Ghost1(new Vector2(13,14),this);
         this._maze = new Maze(this);
+    }
 
-
+    public Ghost1 getGhost1() {
+        return _ghost1;
     }
 
     public Maze getMaze() { return this._maze; }

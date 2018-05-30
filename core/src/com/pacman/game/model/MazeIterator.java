@@ -19,10 +19,10 @@ public class MazeIterator implements Iterator<GameElement> {
         if(!this.hasNext()) throw new NoSuchElementException("No more game elements");
         GameElement gameElement;
         do {
-            gameElement = this._maze.get(_i,_j);
-            _j = (_j + 1) % this._maze.getWidth();
-            if(_j == 0)
-                _i++;
+            gameElement = this._maze.get(_j,_i);
+            _i = (_i + 1) % this._maze.getHeight();
+            if(_i == 0)
+                _j++;
         } while(gameElement == null
                 && this.hasNext());
         return gameElement;

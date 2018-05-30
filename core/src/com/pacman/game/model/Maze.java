@@ -64,9 +64,9 @@ public class Maze implements Iterable<GameElement>{
 
     private void init ()
     {
-        this._height = _laby1.length;
-        this._width  = _laby1[0].length;
-        this._laby2 = new GameElement[this._height][this._width];
+        this._width = _laby1.length;
+        this._height  = _laby1[0].length;
+        this._laby2 = new GameElement[this._width][this._height];
 
         int x = 0,y = 0;
         for(int[] t : _laby1) {
@@ -77,7 +77,7 @@ public class Maze implements Iterable<GameElement>{
                         x,
                         y);
                 this._laby2[x][y] = element;
-                y = (++y % this._width);
+                y = (++y % this._height);
             }
             x++;
         }
