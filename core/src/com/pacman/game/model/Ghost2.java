@@ -13,6 +13,7 @@ public class Ghost2 extends Ghost {
         GameElement ge=_world.getMaze().get((int) _pos.x,(int) _pos.y);
         if((_pos.x%1==0&&_pos.y%1==0)&& (ge instanceof Intersection||ge instanceof Maison || (ge instanceof Super))) {
             deplacementMinim();
+            //Dd
         }
         else{
             _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
