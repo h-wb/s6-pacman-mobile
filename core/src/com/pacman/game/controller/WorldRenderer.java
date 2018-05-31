@@ -54,16 +54,20 @@ public class WorldRenderer {
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Pellet) {
+            if(ge instanceof Super) {
+                this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
+                this.score+=10;
+            }
+            else if(ge instanceof Pellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
             }
-            if(ge instanceof IntersectionPellet) {
+            else if(ge instanceof IntersectionPellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
             }
         }
-        //this.world.getGhost1().deplacement();
+        this.world.getGhost1().deplacement();
         this.world.getGhost2().deplacement();
         TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
         TextureSuper textureSuper = (TextureSuper) TextureFactory.getInstance(world).getTexturable(Super.class);
