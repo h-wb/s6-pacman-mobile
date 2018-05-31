@@ -16,7 +16,7 @@ public class WorldIterator implements Iterator<GameElement>
 
     @Override
     public boolean hasNext() {
-        return (this._i < 2);
+        return (this._i < 3);
     }
 
     @Override
@@ -31,7 +31,8 @@ public class WorldIterator implements Iterator<GameElement>
         switch(this._i) {
             case 0 : return this._mazeIterator.next();
             case 1 : return this._world.getPacman();
-            case 2 : return this._world.getGhost1();
+            case 2 : return this._world.getGhost2();
+            case 3 : return this._world.getGhost1();
             default : return null;  /* erreur */
         }
     }

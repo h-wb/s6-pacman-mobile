@@ -2,7 +2,6 @@ package com.pacman.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
 import com.pacman.game.model.direction;
 

@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pacman.game.model.GameElement;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
+import com.pacman.game.model.Intersection;
+import com.pacman.game.model.IntersectionPellet;
 import com.pacman.game.model.Maison;
 import com.pacman.game.model.Pacman;
 import com.pacman.game.model.Pellet;
@@ -38,6 +40,8 @@ public class TextureFactory
         _textures.put(Barriere.class, new TextureUnique(new Texture(Gdx.files.internal("barriere.png"))));
         _textures.put(Vide.class, new TextureUnique(new Texture(Gdx.files.internal("dark.png"))));
         _textures.put(Pellet.class, new TextureUnique(new Texture(Gdx.files.internal("pellet.png"))));
+        _textures.put(IntersectionPellet.class, new TextureUnique(new Texture(Gdx.files.internal("pellet.png"))));
+        _textures.put(Intersection.class, new TextureUnique(new Texture(Gdx.files.internal("dark.png"))));
         _textures.put(Maison.class, new TextureUnique(new Texture(Gdx.files.internal("dark.png"))));
     }
 

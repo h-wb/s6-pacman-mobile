@@ -41,6 +41,6 @@ public class Intersection extends GameElement {
 
     @Override
     public String toString() {
-        return null;
+        return "Intersection";
     }
 }
