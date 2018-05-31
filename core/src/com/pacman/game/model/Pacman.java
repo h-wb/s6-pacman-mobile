@@ -103,6 +103,7 @@ public class Pacman extends MoveableElement
                     _pos.x=(float)Math.round((_pos.x + _vel.x)*10)/10;
                     _pos.y=(float)Math.round((_pos.y + _vel.y)*10)/10;
                 }
+
             }
         }
         else {

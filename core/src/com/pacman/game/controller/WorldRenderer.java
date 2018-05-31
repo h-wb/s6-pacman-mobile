@@ -1,6 +1,7 @@
 package com.pacman.game.controller;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,6 +23,8 @@ import com.pacman.game.model.Vide;
 import com.pacman.game.model.Block;
 import com.pacman.game.model.World;
 import com.pacman.game.model.GameElement;
+import com.pacman.game.screen.EndScreen;
+import com.pacman.game.screen.GameScreen;
 import com.pacman.game.view.TextureFactory;
 import com.pacman.game.view.TextureGhost1;
 import com.pacman.game.view.TextureGhost2;
@@ -31,14 +34,16 @@ import com.pacman.game.view.TextureSuper;
 public class WorldRenderer {
 
     private World world;
+    private Game game;
     private SpriteBatch spriteBatch;
     private BitmapFont font;
     private float ppuX, ppuY;
     private int score;
     float time=0;
 
-    public WorldRenderer(World world) {
+    public WorldRenderer(World world, Game game) {
         this.world = world;
+        this.game = game;
         this.spriteBatch = new SpriteBatch();
         this.font = new BitmapFont();
         this.score=0;
@@ -63,7 +68,8 @@ public class WorldRenderer {
                 this.score+=10;
             }
         }
-        //this.world.getGhost1().deplacement();
+
+        this.world.getGhost1().deplacement();
         this.world.getGhost2().deplacement();
         TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
         TextureSuper textureSuper = (TextureSuper) TextureFactory.getInstance(world).getTexturable(Super.class);
@@ -73,6 +79,8 @@ public class WorldRenderer {
         textureSuper.render(delta);
         textureGhost1.render(delta);
         textureGhost2.render(delta);
+
+
 
         this.spriteBatch.begin();
         for (GameElement element : this.world) {
@@ -85,6 +93,14 @@ public class WorldRenderer {
             );
         }
         font.draw(spriteBatch,"Score:"+ Integer.toString(score), 0, (this.world.getHeight()+1)*ppuY);
+
+        //Collision fantôme/pacman
+        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle()) ){
+            System.out.println("fant");
+            game.setScreen(new EndScreen(game, score, this.world, ppuX, ppuY));
+        }
+
+
         this.spriteBatch.end();
     }
 

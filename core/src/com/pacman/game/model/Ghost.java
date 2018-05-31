@@ -119,6 +119,29 @@ public abstract class Ghost extends MoveableElement {
 
     }
 
+    protected void sortirMaison() {
+        GameElement geUp, geDown, geRight, geLeft;
+        geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
+        geDown = _world.getMaze().get((int) _pos.x, (int) _pos.y - 1);
+        geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
+        geLeft = _world.getMaze().get((int) _pos.x - 1, (int) _pos.y);
+
+        if ((geLeft instanceof Barriere)) {
+            _vel = (new Vector2(-vitesse, 0));
+        } else if ((geDown instanceof Barriere)) {
+            _vel = (new Vector2(0, -vitesse));
+        } else if (( geRight instanceof Barriere)) {
+            _vel = (new Vector2(vitesse, 0));
+        } else if ((geUp instanceof Barriere)) {
+            _vel = (new Vector2(0, vitesse));
+        }
+
+        //System.out.println(_vel);
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+
+    }
+
     protected void deplacementMinim() {
         float diff_x = Math.abs(_world.getPacman().getPosition().x - _pos.x);
         float diff_y = Math.abs(_world.getPacman().getPosition().y - _pos.y);
@@ -230,7 +253,7 @@ public abstract class Ghost extends MoveableElement {
         }
 
 
-        System.out.println(_vel);
+        //System.out.println(_vel);
         _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
         _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
     }

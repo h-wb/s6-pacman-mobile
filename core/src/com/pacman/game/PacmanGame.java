@@ -12,7 +12,7 @@ public class PacmanGame extends Game {
 
 	@Override
 	public void create() {
-	this.setScreen(new GameScreen());
+	this.setScreen(new GameScreen(this));
 	}
 
 }

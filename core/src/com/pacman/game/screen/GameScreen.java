@@ -1,9 +1,11 @@
 package com.pacman.game.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.pacman.game.PacmanGame;
 import com.pacman.game.controller.Listener;
 import com.pacman.game.model.World;
 import com.pacman.game.view.TextureFactory;
@@ -14,12 +16,21 @@ public class GameScreen implements Screen {
 
     private World _world;
     private WorldRenderer _worldRenderer;
+    private Game _game;
+
+    public GameScreen(PacmanGame game) {
+        this._game = game;
+        this._world = new World();
+        this._worldRenderer = new WorldRenderer(this._world, this._game);
+        Gdx.input.setInputProcessor(new Listener(this._world));
+    }
 
     public GameScreen() {
         this._world = new World();
-        this._worldRenderer = new WorldRenderer(this._world);
+        this._worldRenderer = new WorldRenderer(this._world, this._game);
         Gdx.input.setInputProcessor(new Listener(this._world));
     }
+
 
     public World getWorld() { return this._world; }
 
