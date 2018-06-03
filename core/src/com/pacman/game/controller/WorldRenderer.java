@@ -41,6 +41,7 @@ public class WorldRenderer {
     private float ppuX, ppuY;
     private int score;
     float time=0;
+    private boolean barrieres;
 
     public WorldRenderer(World world, Game game) {
         this.world = world;
@@ -48,6 +49,7 @@ public class WorldRenderer {
         this.spriteBatch = new SpriteBatch();
         this.font = new BitmapFont();
         this.score=0;
+        this.barrieres=true;
     }
 
     public void render(float delta) {
@@ -111,7 +113,8 @@ public class WorldRenderer {
 
     public boolean barrieres(float deltaTime){
         time += deltaTime;
-        if(time >= 5){
+        if(time >= 5 && barrieres){
+            barrieres=false;
             return true;
         }
         return false;
