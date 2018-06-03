@@ -89,9 +89,29 @@ public class WorldRenderer {
         }
 
 
-        if(this.world.getGhost1().getEscape()){
+        if(this.world.getGhost1().getEscape()|| this.world.getGhost2().getEscape() || this.world.getGhost3().getEscape() || this.world.getGhost4().getEscape()){
+            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())){
+                System.out.println("ghost1");
+                this.world.getGhost1().setEscape(false);
+                this.world.getGhost1().setDead(true);
+            }
+            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle())){
+                this.world.getGhost2().setEscape(false);
+                this.world.getGhost2().setDead(true);
+                System.out.println("ghost2");
+            }
+            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())){
+                this.world.getGhost3().setEscape(false);
+                this.world.getGhost3().setDead(true);
+                System.out.println("ghost3");
+            }
+            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())){
+                this.world.getGhost4().setEscape(false);
+                this.world.getGhost4().setDead(true);
+                System.out.println("ghost4");
+            }
             setEscape(delta);
-        }
+            }
 
 
 
@@ -118,17 +138,8 @@ public class WorldRenderer {
         font.draw(spriteBatch,"Score:"+ Integer.toString(score), 0, (this.world.getHeight()+1)*ppuY);
         font.draw(spriteBatch,"Temps écoulé = " + time +'s', (this.world.getWidth()-6)*ppuX, (this.world.getHeight()+1)*ppuY);
 
-        //Collision fantôme/pacman
-        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle()) ){
-            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
-        }
-        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) ){
-            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
-        }
-        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle()) ){
-            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
-        }
-        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle()) ){
+        //Collision fantôme/pacman (un peu longe ptet)
+        if((this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) && !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())&& !this.world.getGhost1().getEscape())){
             game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
         }
 

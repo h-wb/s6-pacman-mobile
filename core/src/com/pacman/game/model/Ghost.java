@@ -12,11 +12,6 @@ public abstract class Ghost extends MoveableElement {
 
     float vitesse = 0.1f;
 
-    public Ghost(Vector2 pos, World w, Boolean escape) {
-        super(pos, w);
-        _vel = new Vector2(0, 0);
-    }
-
     public Ghost(Vector2 pos, World w) {
         super(pos, w);
         _vel = new Vector2(0, 0);
@@ -80,6 +75,12 @@ public abstract class Ghost extends MoveableElement {
 
     @Override
     public void setEscape(Boolean escape) { _escape = escape;}
+
+    @Override
+    public boolean getDead() { return _dead; }
+
+    @Override
+    public void setDead(Boolean dead) { _dead = dead;}
 
 
     public Object direction() {

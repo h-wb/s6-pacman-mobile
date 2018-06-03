@@ -4,9 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ghost4 extends Ghost {
 
-    public Ghost4(Vector2 pos, World w, Boolean escape) {
+    public Ghost4(Vector2 pos, World w, Boolean escape, Boolean dead) {
         super(pos, w);
         _escape = escape;
+        _dead = dead;
+
     }
 
     @Override

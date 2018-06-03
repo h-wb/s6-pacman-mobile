@@ -44,6 +44,12 @@ public class Pacman extends MoveableElement
     @Override
     public void setEscape(Boolean escape) { }
 
+    @Override
+    public boolean getDead() {return false; }
+
+    @Override
+    public void setDead(Boolean dead) { }
+
     public void setNextVelocity(Vector2 velocity) {
         this.nextVelocity = velocity;
     }

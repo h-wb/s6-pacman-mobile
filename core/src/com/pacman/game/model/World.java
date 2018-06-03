@@ -14,13 +14,14 @@ public class World implements Iterable<GameElement>
     private Ghost3 _ghost3;
     private Ghost4 _ghost4;
     private Boolean escape = false;
+    private Boolean dead = false;
 
     public World() {
         this._pacman = new Pacman(new Vector2(1,1), this);
-        this._ghost1 = new Ghost1(new Vector2(13,14),this, escape);
-        this._ghost2 = new Ghost2(new Vector2(13,14),this, escape);
-        this._ghost3 = new Ghost3(new Vector2(13,14),this, escape);
-        this._ghost4 = new Ghost4(new Vector2(13,14),this, escape);
+        this._ghost1 = new Ghost1(new Vector2(13,14),this, escape, dead);
+        this._ghost2 = new Ghost2(new Vector2(13,14),this, escape, dead);
+        this._ghost3 = new Ghost3(new Vector2(13,14),this, escape, dead);
+        this._ghost4 = new Ghost4(new Vector2(13,14),this, escape, dead);
 
         this._maze = new Maze(this);
     }

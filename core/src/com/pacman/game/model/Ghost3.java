@@ -6,9 +6,11 @@ import java.util.Random;
 
 public class Ghost3 extends Ghost {
 
-    public Ghost3(Vector2 pos, World w, Boolean escape) {
+    public Ghost3(Vector2 pos, World w, Boolean escape, Boolean dead) {
         super(pos, w);
         _escape = escape;
+        _dead = dead;
+
     }
 
     @Override
