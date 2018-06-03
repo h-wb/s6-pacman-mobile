@@ -9,10 +9,12 @@ import com.pacman.game.view.TextureFactory;
 public abstract class GameElement {
     protected Vector2 _pos;
     protected World _world;
+    int marque;
 
     public GameElement(Vector2 pos, World w){
         _pos = pos;
         _world = w;
+        marque=0;
     }
 
     public abstract World getWorld();
@@ -28,4 +30,9 @@ public abstract class GameElement {
     public abstract Rectangle getRectangle();
 
     public abstract String toString();
+
+    public void marquer(int marque) {
+        this.marque = marque;
+    }
+
 }

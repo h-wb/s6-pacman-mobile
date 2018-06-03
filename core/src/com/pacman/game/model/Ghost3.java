@@ -19,10 +19,8 @@ public class Ghost3 extends Ghost {
         }
         else if((_pos.x%1==0&&_pos.y%1==0) && (ge instanceof Intersection || ge instanceof Maison || ge instanceof Super)) {
             if (myRand.nextBoolean()) {
-                System.out.println("oui");
                 deplacementMinim();
             } else {
-                System.out.println("non");
                 deplacementAlea();
             }
         }

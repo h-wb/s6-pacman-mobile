@@ -15,7 +15,7 @@ public class Ghost4 extends Ghost {
             sortirMaison();
         }
         else if((_pos.x%1==0&&_pos.y%1==0) && (ge instanceof Intersection || ge instanceof Maison || ge instanceof Super)) {
-            deplacementMinim();
+            this._world.getMaze().parcoursEnLargeur(this);
         }
         else{
             _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;

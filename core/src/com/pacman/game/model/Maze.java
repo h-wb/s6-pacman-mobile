@@ -1,6 +1,9 @@
 package com.pacman.game.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.badlogic.gdx.math.Vector2;
@@ -110,6 +113,56 @@ public class Maze implements Iterable<GameElement>{
 
     public void set(int x, int y, GameElement ge) {
         this._laby2[x][y]=ge;
+    }
+
+    public void marquerTousLesSommets(int marque) {
+        Iterator it = iterator();
+        while (it.hasNext())
+            ((GameElement) it.next()).marquer(marque);
+    }
+
+    public LinkedList parcoursEnLargeur(GameElement depart) {
+        marquerTousLesSommets(0);
+        LinkedList file = new LinkedList();
+        LinkedList chemin = new LinkedList();
+        depart.marquer(1);
+        file.addLast(depart);
+        while (file.size() > 0) {
+            GameElement u = (GameElement) file.removeFirst();
+            chemin.add(u);
+            ArrayList<GameElement> v= sommetsVoisins(u);
+            for (int i=0;i<v.size();i++){
+                if (v.get(i).marque == 0) {
+                    v.get(i).marquer(1);
+                    System.out.println(v.get(i));
+                    file.addLast(v.get(i));
+                }
+            }
+            u.marquer(2);
+        }
+        return chemin;
+    }
+
+    public ArrayList<GameElement> sommetsVoisins(GameElement s) {
+        ArrayList<GameElement> liste=new ArrayList<GameElement>();
+        GameElement geUp = _world.getMaze().get((int)s._pos.x, (int) s._pos.y + 1);
+        GameElement geDown = _world.getMaze().get((int) s._pos.x, (int) s._pos.y - 1);
+        GameElement geRight = _world.getMaze().get((int) s._pos.x + 1, (int) s._pos.y);
+        GameElement geLeft = _world.getMaze().get((int) s._pos.x - 1, (int) s._pos.y);
+
+        if(!(geUp instanceof Block)){
+            liste.add(geUp);
+        }
+        if(!(geDown instanceof Block)){
+            liste.add(geDown);
+        }
+        if(!(geLeft instanceof Block)){
+            liste.add(geLeft);
+        }
+        if(!(geRight instanceof Block)){
+            liste.add(geRight);
+        }
+        return liste;
     }
 
 }
