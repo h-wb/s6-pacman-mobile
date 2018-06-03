@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pacman.game.model.GameElement;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
+import com.pacman.game.model.Ghost3;
+import com.pacman.game.model.Ghost4;
 import com.pacman.game.model.Intersection;
 import com.pacman.game.model.IntersectionPellet;
 import com.pacman.game.model.Maison;
@@ -34,6 +36,8 @@ public class TextureFactory
         _textures = new HashMap<Class<?>, iTexturable>();
         _textures.put(Ghost1.class, new TextureGhost1(_world.getGhost1(),1.0));
         _textures.put(Ghost2.class, new TextureGhost2(_world.getGhost2(),1.0));
+        _textures.put(Ghost3.class, new TextureGhost3(_world.getGhost3(),1.0));
+        _textures.put(Ghost4.class, new TextureGhost4(_world.getGhost4(),1.0));
         _textures.put(Pacman.class,new TexturePacman(_world.getPacman(),1.0));
         _textures.put(Super.class, new TextureSuper(1.0));
         _textures.put(Block.class, new TextureUnique(new Texture(Gdx.files.internal("bloc.png"))));

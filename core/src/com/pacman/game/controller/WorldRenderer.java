@@ -59,11 +59,15 @@ public class WorldRenderer {
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Pellet) {
+            if(ge instanceof Super) {
+                this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
+                this.score+=10;
+            }
+            else if(ge instanceof Pellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
             }
-            if(ge instanceof IntersectionPellet) {
+            else if(ge instanceof IntersectionPellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
             }
@@ -71,14 +75,16 @@ public class WorldRenderer {
 
         this.world.getGhost1().deplacement();
         this.world.getGhost2().deplacement();
+        this.world.getGhost3().deplacement();
+        this.world.getGhost4().deplacement();
         TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
-        TextureSuper textureSuper = (TextureSuper) TextureFactory.getInstance(world).getTexturable(Super.class);
-        TextureGhost1 textureGhost1 = (TextureGhost1) TextureFactory.getInstance(world).getTexturable(Ghost1.class);
-        TextureGhost2 textureGhost2 = (TextureGhost2) TextureFactory.getInstance(world).getTexturable(Ghost2.class);
+        //TextureSuper textureSuper = (TextureSuper) TextureFactory.getInstance(world).getTexturable(Super.class);
+        //TextureGhost1 textureGhost1 = (TextureGhost1) TextureFactory.getInstance(world).getTexturable(Ghost1.class);
+       // TextureGhost2 textureGhost2 = (TextureGhost2) TextureFactory.getInstance(world).getTexturable(Ghost2.class);
         texturePacman.render(delta);
-        textureSuper.render(delta);
-        textureGhost1.render(delta);
-        textureGhost2.render(delta);
+        //textureSuper.render(delta);
+       // textureGhost1.render(delta);
+       // textureGhost2.render(delta);
 
 
 

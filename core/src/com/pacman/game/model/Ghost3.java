@@ -2,20 +2,29 @@ package com.pacman.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class Ghost2 extends Ghost {
+import java.util.Random;
 
-    public Ghost2(Vector2 pos, World w) {
+public class Ghost3 extends Ghost {
+
+    public Ghost3(Vector2 pos, World w) {
         super(pos, w);
     }
 
     @Override
     public void deplacement() {
         GameElement ge=_world.getMaze().get((int) _pos.x,(int) _pos.y);
+        Random myRand = new Random();
         if((_pos.x%1==0&&_pos.y%1==0) && ( ge instanceof Maison || ge instanceof Super)) {
             sortirMaison();
         }
         else if((_pos.x%1==0&&_pos.y%1==0) && (ge instanceof Intersection || ge instanceof Super)) {
-            deplacementMinim();
+            if (myRand.nextBoolean()) {
+                System.out.println("oui");
+                deplacementMinim();
+            } else {
+                System.out.println("non");
+                deplacementAlea();
+            }
         }
         else{
             _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;

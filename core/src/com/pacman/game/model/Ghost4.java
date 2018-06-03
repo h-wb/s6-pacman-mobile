@@ -2,9 +2,9 @@ package com.pacman.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class Ghost2 extends Ghost {
+public class Ghost4 extends Ghost {
 
-    public Ghost2(Vector2 pos, World w) {
+    public Ghost4(Vector2 pos, World w) {
         super(pos, w);
     }
 

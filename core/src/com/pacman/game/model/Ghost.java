@@ -119,6 +119,7 @@ public abstract class Ghost extends MoveableElement {
 
     }
 
+
     protected void sortirMaison() {
         GameElement geUp, geDown, geRight, geLeft;
         geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
@@ -142,7 +143,7 @@ public abstract class Ghost extends MoveableElement {
 
     }
 
-    protected void deplacementMinim() {
+    protected void deplacementFuite() {
         float diff_x = Math.abs(_world.getPacman().getPosition().x - _pos.x);
         float diff_y = Math.abs(_world.getPacman().getPosition().y - _pos.y);
         GameElement geUp, geDown, geRight, geLeft;
@@ -151,109 +152,259 @@ public abstract class Ghost extends MoveableElement {
         geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
         geLeft = _world.getMaze().get((int) _pos.x - 1, (int) _pos.y);
 
-        if (_world.getPacman().getPosition().y == _pos.y && _world.getPacman().getPosition().x < _pos.x) {
-
-            if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
-            } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
-            } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            }
-
-
-        } else if (_world.getPacman().getPosition().y == _pos.y && _world.getPacman().getPosition().x > _pos.x) {
-
-            if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
-            } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
-            } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            }
-
-
-        } else if (_world.getPacman().getPosition().y > _pos.y && _world.getPacman().getPosition().x == _pos.x) {
-
-            if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
-            } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
-            }
-
-
-        } else if (_world.getPacman().getPosition().y < _pos.y && _world.getPacman().getPosition().x == _pos.x) {
-
-            if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
-            } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
-            }
-
-        } else if (_world.getPacman().getPosition().y == _pos.y && _world.getPacman().getPosition().x == _pos.x) {
+        if (diff_x == 0 && diff_y == 0) {
             _vel = (new Vector2(0, 0));
-        } else if (_world.getPacman().getPosition().y > _pos.y && _world.getPacman().getPosition().x > _pos.x) {
-
-           if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
-            } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
+        } else if (Math.abs(diff_x) < Math.abs((diff_y))) {
+            if (diff_x > 0) {
+                if (diff_y > 0) {
+                    if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    }
+                } else {
+                    if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    }
+                }
+            } else {
+                if (diff_y > 0) {
+                    if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    }
+                } else {
+                    if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    }
+                }
             }
-        } else if (_world.getPacman().getPosition().y > _pos.y && _world.getPacman().getPosition().x < _pos.x) {
-
-            if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
-            } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
-            }
-        } else if (_world.getPacman().getPosition().y < _pos.y && _world.getPacman().getPosition().x > _pos.x) {
-
-            if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
-            } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
-            }
-
-
-        } else if (_world.getPacman().getPosition().y < _pos.y && _world.getPacman().getPosition().x < _pos.x) {
-
-            if (!(geDown instanceof Block || geDown instanceof Barriere)) {
-                _vel = (new Vector2(0, -vitesse));
-            } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
-                _vel = (new Vector2(-vitesse, 0));
-            } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
-                _vel = (new Vector2(0, vitesse));
-            } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
-                _vel = (new Vector2(vitesse, 0));
+        } else {
+            if (diff_y > 0) {
+                if (diff_x > 0) {
+                    if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    }
+                } else {
+                    if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    }
+                }
+            } else {
+                if (diff_x > 0) {
+                    if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    }
+                } else {
+                    if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    }
+                }
             }
         }
 
 
-        //System.out.println(_vel);
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+    }
+
+    protected void deplacementMinim() {
+        float diff_x = _world.getPacman().getPosition().x - _pos.x;
+        float diff_y = _world.getPacman().getPosition().y - _pos.y;
+        GameElement geUp, geDown, geRight, geLeft;
+        geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
+        geDown = _world.getMaze().get((int) _pos.x, (int) _pos.y - 1);
+        geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
+        geLeft = _world.getMaze().get((int) _pos.x - 1, (int) _pos.y);
+
+        if (diff_x == 0 && diff_y == 0) {
+            _vel = (new Vector2(0, 0));
+        } else if (diff_x == 0) {
+            if (diff_y < 0) {
+                if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                    _vel = (new Vector2(0, -vitesse));
+                } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                    _vel = (new Vector2(-vitesse, 0));
+                } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                    _vel = (new Vector2(vitesse, 0));
+
+                } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                    _vel = (new Vector2(0, vitesse));
+                }
+            } else {
+                if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                    _vel = (new Vector2(0, vitesse));
+                } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                    _vel = (new Vector2(vitesse, 0));
+                } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                    _vel = (new Vector2(-vitesse, 0));
+                } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                    _vel = (new Vector2(0, -vitesse));
+                }
+            }
+
+        } else if (diff_y == 0) {
+            if (diff_x < 0) {
+                if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                    _vel = (new Vector2(-vitesse, 0));
+                } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                    _vel = (new Vector2(0, -vitesse));
+                } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                    _vel = (new Vector2(0, vitesse));
+                } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                    _vel = (new Vector2(vitesse, 0));
+                }
+            } else if (diff_x > 0) {
+                if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                    _vel = (new Vector2(vitesse, 0));
+                } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                    _vel = (new Vector2(0, vitesse));
+                } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                    _vel = (new Vector2(0, -vitesse));
+                } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                    _vel = (new Vector2(-vitesse, 0));
+                }
+            }
+        } else if (Math.abs(diff_x) < Math.abs((diff_y))) {
+            if (diff_x < 0) {
+                if (diff_y < 0) {
+                    if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    }
+                } else if (diff_y > 0) {
+                    if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    }
+                }
+            } else {
+                if (diff_y < 0) {
+                    if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    }
+                } else if (diff_y > 0) {
+                    if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    }
+                }
+            }
+        } else {
+            if (diff_y < 0) {
+                if (diff_x < 0) {
+                    if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    }
+                } else if (diff_x > 0) {
+                    if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    }
+                }
+            } else {
+                if (diff_x < 0) {
+                    if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    }
+                } else if (diff_x > 0) {
+                    if (!(geUp instanceof Block || geUp instanceof Barriere)) {
+                        _vel = (new Vector2(0, vitesse));
+                    } else if (!(geRight instanceof Block || geRight instanceof Barriere)) {
+                        _vel = (new Vector2(vitesse, 0));
+                    } else if (!(geDown instanceof Block || geDown instanceof Barriere)) {
+                        _vel = (new Vector2(0, -vitesse));
+                    } else if (!(geLeft instanceof Block || geLeft instanceof Barriere)) {
+                        _vel = (new Vector2(-vitesse, 0));
+                    }
+                }
+            }
+        }
+
+
         _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
         _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
     }
