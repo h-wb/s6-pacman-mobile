@@ -9,11 +9,17 @@ import java.util.ArrayList;
 
 public abstract class Ghost extends MoveableElement {
 
-    float vitesse = 0.1f;
+    private float vitesse = 0.1f;
+
+    protected boolean doitSortir=false;
 
     public Ghost(Vector2 pos, World w) {
         super(pos, w);
         _vel = new Vector2(0, 0);
+    }
+
+    public void setDoitSortir(boolean doitSortir) {
+        this.doitSortir = doitSortir;
     }
 
     public float getVitesse() {
@@ -124,16 +130,16 @@ public abstract class Ghost extends MoveableElement {
         GameElement geUp, geDown, geRight, geLeft;
         geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
         geDown = _world.getMaze().get((int) _pos.x, (int) _pos.y - 1);
-        geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
         geLeft = _world.getMaze().get((int) _pos.x - 1, (int) _pos.y);
 
-        if ((geLeft instanceof Barriere)) {
+        Barriere sortie=this._world.getMaze().getBarierres()[0];
+        if(sortie._pos.x<=_pos.x && !(geLeft instanceof Block)){
             _vel = (new Vector2(-vitesse, 0));
-        } else if ((geDown instanceof Barriere)) {
+        }
+        else if(!(geDown instanceof Block) && sortie._pos.y<_pos.y){
             _vel = (new Vector2(0, -vitesse));
-        } else if (( geRight instanceof Barriere)) {
-            _vel = (new Vector2(vitesse, 0));
-        } else if ((geUp instanceof Barriere)) {
+        }
+        else if( !(geUp instanceof Block) && sortie._pos.y>_pos.y){
             _vel = (new Vector2(0, vitesse));
         }
 

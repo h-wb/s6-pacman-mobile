@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.pacman.game.model.Barriere;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
 import com.pacman.game.model.Intersection;
@@ -51,24 +52,22 @@ public class WorldRenderer {
 
     public void render(float delta) {
         if(barrieres(delta)){
-            this.world.getMaze().set(12,13,new Vide(new Vector2(12,13),world));
-            this.world.getMaze().set(12,14,new Vide(new Vector2(12,14),world));
+            this.world.getMaze().enleveBarriere();
+            this.world.getGhost1().setDoitSortir(true);
+            this.world.getGhost2().setDoitSortir(true);
+            this.world.getGhost3().setDoitSortir(true);
         }
 
         this.world.getPacman().deplacement();
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Super) {
+            if(ge instanceof Super || ge instanceof IntersectionPellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
             }
             else if(ge instanceof Pellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(new Vector2((int)pos.x,(int)pos.y),this.world));
-                this.score+=10;
-            }
-            else if(ge instanceof IntersectionPellet) {
-                this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
             }
         }

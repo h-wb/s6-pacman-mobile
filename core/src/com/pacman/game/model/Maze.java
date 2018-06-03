@@ -12,6 +12,7 @@ public class Maze implements Iterable<GameElement>{
     private World _world;
     private int _height;
     private int _width;
+    private Barriere[] _barrieres;
     //les int sont final code prof
     private GameElement[][] _laby2;
     private int[][] _laby1 = new int[][] {
@@ -67,8 +68,9 @@ public class Maze implements Iterable<GameElement>{
         this._width = _laby1.length;
         this._height  = _laby1[0].length;
         this._laby2 = new GameElement[this._width][this._height];
+        this._barrieres = new Barriere[2];
 
-        int x = 0,y = 0;
+        int x = 0,y = 0,b=0;
         for(int[] t : _laby1) {
             for(int elementType : t) {
                 GameElement element = MazeCOR.getCOR ().build (
@@ -77,6 +79,10 @@ public class Maze implements Iterable<GameElement>{
                         x,
                         y);
                 this._laby2[x][y] = element;
+                if(element instanceof Barriere){
+                    this._barrieres[b]=(Barriere) element;
+                    b++;
+                }
                 y = (++y % this._height);
             }
             x++;
@@ -92,6 +98,16 @@ public class Maze implements Iterable<GameElement>{
     }
 
     public GameElement get(int x, int y) { return this._laby2[x][y]; }
+
+    public Barriere[] getBarierres(){
+        return _barrieres;
+    }
+
+    public void enleveBarriere(){
+        for(Barriere barriere:_barrieres){
+            _laby2[(int)barriere.getPosition().x][(int)barriere.getPosition().y]=new Vide(new Vector2(barriere.getPosition().x,barriere.getPosition().y),this._world);
+        }
+    }
 
     public int getHeight() { return _height; }
 
