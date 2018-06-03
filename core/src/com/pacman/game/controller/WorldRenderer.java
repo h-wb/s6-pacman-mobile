@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.pacman.game.model.Ghost;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
 import com.pacman.game.model.Intersection;
@@ -40,6 +41,9 @@ public class WorldRenderer {
     private float ppuX, ppuY;
     private int score;
     float time=0;
+    float escapeTime = 0;
+    long startTime;
+    long globalEscapeTime;
 
     public WorldRenderer(World world, Game game) {
         this.world = world;
@@ -47,9 +51,14 @@ public class WorldRenderer {
         this.spriteBatch = new SpriteBatch();
         this.font = new BitmapFont();
         this.score=0;
+        startTime = System.currentTimeMillis();
+        globalEscapeTime = System.nanoTime();
+
     }
 
     public void render(float delta) {
+
+        long time = ((System.currentTimeMillis() - startTime) / 1000);
         if(barrieres(delta)){
             this.world.getMaze().set(12,13,new Vide(new Vector2(12,13),world));
             this.world.getMaze().set(12,14,new Vide(new Vector2(12,14),world));
@@ -62,6 +71,12 @@ public class WorldRenderer {
             if(ge instanceof Super) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
+                this.world.getGhost1().setEscape(true);
+                this.world.getGhost2().setEscape(true);
+                this.world.getGhost3().setEscape(true);
+                this.world.getGhost4().setEscape(true);
+                escapeTime = 0;
+
             }
             else if(ge instanceof Pellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(new Vector2((int)pos.x,(int)pos.y),this.world));
@@ -73,18 +88,20 @@ public class WorldRenderer {
             }
         }
 
+
+        if(this.world.getGhost1().getEscape()){
+            setEscape(delta);
+        }
+
+
+
         this.world.getGhost1().deplacement();
         this.world.getGhost2().deplacement();
         this.world.getGhost3().deplacement();
         this.world.getGhost4().deplacement();
         TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
-        //TextureSuper textureSuper = (TextureSuper) TextureFactory.getInstance(world).getTexturable(Super.class);
-        //TextureGhost1 textureGhost1 = (TextureGhost1) TextureFactory.getInstance(world).getTexturable(Ghost1.class);
-       // TextureGhost2 textureGhost2 = (TextureGhost2) TextureFactory.getInstance(world).getTexturable(Ghost2.class);
         texturePacman.render(delta);
-        //textureSuper.render(delta);
-       // textureGhost1.render(delta);
-       // textureGhost2.render(delta);
+
 
 
 
@@ -99,12 +116,24 @@ public class WorldRenderer {
             );
         }
         font.draw(spriteBatch,"Score:"+ Integer.toString(score), 0, (this.world.getHeight()+1)*ppuY);
+        font.draw(spriteBatch,"Temps écoulé = " + time +'s', (this.world.getWidth()-6)*ppuX, (this.world.getHeight()+1)*ppuY);
 
         //Collision fantôme/pacman
         if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle()) ){
-            System.out.println("fant");
-            game.setScreen(new EndScreen(game, score, this.world, ppuX, ppuY));
+            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
         }
+        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) ){
+            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
+        }
+        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle()) ){
+            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
+        }
+        if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) || this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle()) ){
+            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
+        }
+
+
+
 
 
         this.spriteBatch.end();
@@ -114,6 +143,18 @@ public class WorldRenderer {
         time += deltaTime;
         if(time >= 5){
             return true;
+        }
+        return false;
+    }
+
+    public boolean setEscape(float deltaTime){
+        escapeTime += deltaTime;
+        if(escapeTime >= 7){
+            this.world.getGhost1().setEscape(false);
+            this.world.getGhost2().setEscape(false);
+            this.world.getGhost3().setEscape(false);
+            this.world.getGhost4().setEscape(false);
+
         }
         return false;
     }

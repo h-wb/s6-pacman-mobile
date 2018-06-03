@@ -12,9 +12,16 @@ public abstract class MoveableElement extends GameElement{
 
     protected Vector2 _vel;
 
+    protected Boolean _escape;
+
     public abstract Vector2 getVelocity();
 
     public abstract void setVelocity(Vector2 v);
 
+    public abstract boolean getEscape();
+
+    public abstract void setEscape(Boolean escape);
+
     public abstract void deplacement();
+
 }

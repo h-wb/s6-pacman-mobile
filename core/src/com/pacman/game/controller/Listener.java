@@ -33,6 +33,8 @@ public class Listener implements InputProcessor {
         if(keycode == Input.Keys.DOWN)
             update(new Vector2(0,-moveAmount));
         return true;
+
+
     }
 
     @Override

@@ -4,12 +4,18 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.pacman.game.screen.EndScreen;
 
 import java.util.ArrayList;
 
 public abstract class Ghost extends MoveableElement {
 
     float vitesse = 0.1f;
+
+    public Ghost(Vector2 pos, World w, Boolean escape) {
+        super(pos, w);
+        _vel = new Vector2(0, 0);
+    }
 
     public Ghost(Vector2 pos, World w) {
         super(pos, w);
@@ -68,6 +74,13 @@ public abstract class Ghost extends MoveableElement {
     public void setVelocity(Vector2 v) {
         _vel = v;
     }
+
+    @Override
+    public boolean getEscape() { return _escape; }
+
+    @Override
+    public void setEscape(Boolean escape) { _escape = escape;}
+
 
     public Object direction() {
         if (_vel.x > 0) {

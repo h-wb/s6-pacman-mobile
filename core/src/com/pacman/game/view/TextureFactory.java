@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pacman.game.model.GameElement;
+import com.pacman.game.model.Ghost;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
 import com.pacman.game.model.Ghost3;
