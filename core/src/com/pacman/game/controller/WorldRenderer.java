@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.model.Ghost;
+import com.pacman.game.model.Barriere;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
 import com.pacman.game.model.Intersection;
@@ -44,6 +45,7 @@ public class WorldRenderer {
     float escapeTime = 0;
     long startTime;
     long globalEscapeTime;
+    private boolean barrieres;
 
     public WorldRenderer(World world, Game game) {
         this.world = world;
@@ -53,65 +55,67 @@ public class WorldRenderer {
         this.score=0;
         startTime = System.currentTimeMillis();
         globalEscapeTime = System.nanoTime();
-
+        this.barrieres=true;
     }
 
     public void render(float delta) {
 
         long time = ((System.currentTimeMillis() - startTime) / 1000);
         if(barrieres(delta)){
-            this.world.getMaze().set(12,13,new Vide(new Vector2(12,13),world));
-            this.world.getMaze().set(12,14,new Vide(new Vector2(12,14),world));
+            this.world.getMaze().enleveBarriere();
+            this.world.getGhost1().setDoitSortir(true);
+            this.world.getGhost2().setDoitSortir(true);
+            this.world.getGhost3().setDoitSortir(true);
         }
 
         this.world.getPacman().deplacement();
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Super) {
+            if(ge instanceof Super || ge instanceof IntersectionPellet) {
+                if(ge instanceof Super) {
+                    this.world.getGhost1().setEscape(true);
+                    this.world.getGhost2().setEscape(true);
+                    this.world.getGhost3().setEscape(true);
+                    this.world.getGhost4().setEscape(true);
+                    escapeTime = 0;
+                }
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
-                this.world.getGhost1().setEscape(true);
-                this.world.getGhost2().setEscape(true);
-                this.world.getGhost3().setEscape(true);
-                this.world.getGhost4().setEscape(true);
-                escapeTime = 0;
-
             }
             else if(ge instanceof Pellet) {
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
             }
-            else if(ge instanceof IntersectionPellet) {
-                this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
-                this.score+=10;
-            }
         }
 
 
-        if(this.world.getGhost1().getEscape()|| this.world.getGhost2().getEscape() || this.world.getGhost3().getEscape() || this.world.getGhost4().getEscape()){
-            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())){
+        if(this.world.getGhost1().getEscape()|| this.world.getGhost2().getEscape() || this.world.getGhost3().getEscape() || this.world.getGhost4().getEscape()) {
+            setTimeEscape(delta);
+
+
+            if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())) {
                 System.out.println("ghost1");
                 this.world.getGhost1().setEscape(false);
                 this.world.getGhost1().setDead(true);
             }
-            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle())){
+            if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle())) {
                 this.world.getGhost2().setEscape(false);
                 this.world.getGhost2().setDead(true);
                 System.out.println("ghost2");
             }
-            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())){
+            if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())) {
                 this.world.getGhost3().setEscape(false);
                 this.world.getGhost3().setDead(true);
                 System.out.println("ghost3");
             }
-            if(this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())){
+            if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())) {
                 this.world.getGhost4().setEscape(false);
                 this.world.getGhost4().setDead(true);
                 System.out.println("ghost4");
             }
-            setEscape(delta);
-            }
+        }
+
 
 
 
@@ -152,13 +156,14 @@ public class WorldRenderer {
 
     public boolean barrieres(float deltaTime){
         time += deltaTime;
-        if(time >= 5){
+        if(time >= 5 && barrieres){
+            barrieres=false;
             return true;
         }
         return false;
     }
 
-    public boolean setEscape(float deltaTime){
+    public boolean setTimeEscape(float deltaTime){
         escapeTime += deltaTime;
         if(escapeTime >= 7){
             this.world.getGhost1().setEscape(false);

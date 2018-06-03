@@ -31,4 +31,5 @@ public class MazeIterator implements Iterator<GameElement> {
     @Override public void remove() {
 
     }
+
 }
