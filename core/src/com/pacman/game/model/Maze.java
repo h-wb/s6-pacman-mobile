@@ -105,7 +105,7 @@ public class Maze implements Iterable<GameElement>{
 
     public void enleveBarriere(){
         for(Barriere barriere:_barrieres){
-            _laby2[(int)barriere.getPosition().x][(int)barriere.getPosition().y]=new Vide(new Vector2(barriere.getPosition().x,barriere.getPosition().y),this._world);
+            _laby2[(int)barriere.getPosition().x][(int)barriere.getPosition().y]=new BarriereOpen(new Vector2(barriere.getPosition().x,barriere.getPosition().y),this._world);
         }
     }
 
