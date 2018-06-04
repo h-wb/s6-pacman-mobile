@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 public abstract class Ghost extends MoveableElement {
 
-    private float vitesse = 0.050f;
+    private float vitesse = 0.1f;
 
     protected boolean doitSortir;
 
