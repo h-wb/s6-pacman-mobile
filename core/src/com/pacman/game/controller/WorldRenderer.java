@@ -15,6 +15,8 @@ import com.pacman.game.model.Ghost;
 import com.pacman.game.model.Barriere;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
+import com.pacman.game.model.Ghost3;
+import com.pacman.game.model.Ghost4;
 import com.pacman.game.model.Intersection;
 import com.pacman.game.model.IntersectionPellet;
 import com.pacman.game.model.Maison;
@@ -30,6 +32,8 @@ import com.pacman.game.screen.GameScreen;
 import com.pacman.game.view.TextureFactory;
 import com.pacman.game.view.TextureGhost1;
 import com.pacman.game.view.TextureGhost2;
+import com.pacman.game.view.TextureGhost3;
+import com.pacman.game.view.TextureGhost4;
 import com.pacman.game.view.TexturePacman;
 import com.pacman.game.view.TextureSuper;
 
@@ -51,7 +55,7 @@ public class WorldRenderer {
     private int barriereTime = 5; //en secondes : temps avec que la barrière disparaisse
     private float fantomeEscapeVitesse = 0.05f;
     private float fantomeMortVitesse = 0.2f;
-
+    private int clignoteTime = 2;
 
 
     public WorldRenderer(World world, Game game) {
@@ -152,6 +156,18 @@ public class WorldRenderer {
     private void animation(float delta){
         TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
         texturePacman.render(delta);
+
+        TextureGhost1 textureGhost1 = (TextureGhost1) TextureFactory.getInstance(world).getTexturable(Ghost1.class);
+        textureGhost1.render(delta);
+
+        TextureGhost2 textureGhost2 = (TextureGhost2) TextureFactory.getInstance(world).getTexturable(Ghost2.class);
+        textureGhost2.render(delta);
+
+        TextureGhost3 textureGhost3 = (TextureGhost3) TextureFactory.getInstance(world).getTexturable(Ghost3.class);
+        textureGhost3.render(delta);
+
+        TextureGhost4 textureGhost4 = (TextureGhost4) TextureFactory.getInstance(world).getTexturable(Ghost4.class);
+        textureGhost4.render(delta);
     }
 
     /*****Methode de compteur pour la barriere****/
@@ -202,6 +218,18 @@ public class WorldRenderer {
                     this.world.getGhost4().setVitesse(fantomeMortVitesse);
                 }
             }
+        }
+        if(invincibiliteTime-compteurInvincibilite <= clignoteTime) {
+            this.world.getGhost1().setClignote(true);
+            this.world.getGhost2().setClignote(true);
+            this.world.getGhost3().setClignote(true);
+            this.world.getGhost4().setClignote(true);
+        }
+        else{
+            this.world.getGhost1().setClignote(false);
+            this.world.getGhost2().setClignote(false);
+            this.world.getGhost3().setClignote(false);
+            this.world.getGhost4().setClignote(false);
         }
     }
 

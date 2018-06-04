@@ -6,10 +6,9 @@ import com.pacman.game.model.Ghost;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.direction;
 
-public class TextureGhost1 implements iTexturable
-{
+public class TextureGhost1 implements iTexturable {
     private Ghost1 _ghost1;
-    private Texture _textureBASE,_textureLEFT,_textureRIGHT,_textureUP, _textureESCAPING, _textureDEAD, _textureCLIGNOTE;
+    private Texture _textureBASE, _textureLEFT, _textureRIGHT, _textureUP, _textureESCAPING, _textureDEAD, _textureCLIGNOTE;
     private double _deltaT;
     private double _seuil;
 
@@ -27,22 +26,21 @@ public class TextureGhost1 implements iTexturable
         _textureUP = new Texture(Gdx.files.internal("ghost1-up.png"));
     }
 
-    public void render (double delta) {
+    public void render(double delta) {
         _deltaT += delta;
         if (_deltaT > _seuil)
             _deltaT = 0.0;
     }
 
-    public Texture getTexture () {
-        if(_ghost1.getEscape()){
-            if (_deltaT == 2)
+    public Texture getTexture() {
+        if (_ghost1.getEscape()) {
+            if (_ghost1.isClignote() && _deltaT < (_seuil / 2.0))
                 return _textureCLIGNOTE;
-            return _textureESCAPING;
-        }
-        else if(_ghost1.getDead()){
+            else
+                return _textureESCAPING;
+        } else if (_ghost1.getDead()) {
             return _textureDEAD;
-        }
-        else{
+        } else {
             if (_ghost1.direction() == direction.DOWN)
                 return _textureBASE;
             if (_ghost1.direction() == direction.LEFT)
