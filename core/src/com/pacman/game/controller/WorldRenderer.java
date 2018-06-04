@@ -124,10 +124,17 @@ public class WorldRenderer {
             );
         }
 
+        teleportation();
         setPanel();
         checkGameOver();
 
         this.spriteBatch.end();
+    }
+
+    private void teleportation(){
+           if (this.world.getME().getRectangle().overlaps(new Rectangle(3,1,1,1))){
+            System.out.println("fsfsdf");
+        }
     }
 
 

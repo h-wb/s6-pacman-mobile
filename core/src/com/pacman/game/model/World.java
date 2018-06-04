@@ -13,11 +13,12 @@ public class World implements Iterable<GameElement>
     private Ghost2 _ghost2;
     private Ghost3 _ghost3;
     private Ghost4 _ghost4;
+    private MoveableElement _ME;
     private Boolean escape = false;
     private Boolean dead = false;
 
     public World() {
-        this._pacman = new Pacman(new Vector2(23,14), this);
+        this._pacman = new Pacman(new Vector2(1,1), this);
         this._ghost1 = new Ghost1(new Vector2(13,14),this, escape, dead);
         this._ghost2 = new Ghost2(new Vector2(13,14),this, escape, dead);
         this._ghost3 = new Ghost3(new Vector2(13,14),this, escape, dead);
@@ -35,6 +36,8 @@ public class World implements Iterable<GameElement>
     public Ghost4 getGhost4() { return _ghost4; }
 
     public Ghost getGhost() { return _ghost; }
+
+    public MoveableElement getME() { return _ME; }
 
     public Maze getMaze() { return this._maze; }
 
