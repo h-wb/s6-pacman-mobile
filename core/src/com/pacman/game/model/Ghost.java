@@ -662,8 +662,8 @@ public abstract class Ghost extends MoveableElement {
         LinkedList liste = this._world.getMaze().parcoursEnLargeur(this, this._world.getPacman());
         if ((GameElement) liste.removeFirst() == this._world.getMaze().get((int) _pos.x, (int) _pos.y)) {
             _vel = new Vector2(0, 0);
-        } else if (liste.size() > 1) {
-            GameElement next = (GameElement) liste.get(1);
+        } else if (liste.size() >= 1) {
+            GameElement next = (GameElement) liste.removeFirst();
             if (next != null) {
                 if (next._pos.x - _pos.x == 1) {
                     _vel = new Vector2(vitesse, 0);

@@ -16,6 +16,7 @@ public class Maze implements Iterable<GameElement>{
     private World _world;
     private int _height;
     private int _width;
+    private int nbPellet;
     private Barriere[] _barrieres;
     //les int sont final code prof
     private GameElement[][] _laby2;
@@ -69,6 +70,7 @@ public class Maze implements Iterable<GameElement>{
 
     private void init ()
     {
+        this.nbPellet=0;
         this._width = _laby1.length;
         this._height  = _laby1[0].length;
         this._laby2 = new GameElement[this._width][this._height];
@@ -87,6 +89,9 @@ public class Maze implements Iterable<GameElement>{
                     this._barrieres[b]=(Barriere) element;
                     b++;
                 }
+                if(element instanceof Pellet || element instanceof IntersectionPellet){
+                    nbPellet=nbPellet+1;
+                }
                 y = (++y % this._height);
             }
             x++;
@@ -95,6 +100,24 @@ public class Maze implements Iterable<GameElement>{
         int startx=(int)_world.getPacman()._pos.x;
         int starty=(int)_world.getPacman()._pos.y;
         this._laby2[startx][starty]=new Intersection(new Vector2(startx,starty),_world);
+        nbPellet=nbPellet-1;
+    }
+
+    public void mange(GameElement ge){
+
+        if(ge instanceof Super || ge instanceof IntersectionPellet)
+            set((int) ge._pos.x, (int) ge._pos.y, new Intersection(new Vector2((int) ge._pos.x, (int) ge._pos.y), _world));
+        else if(ge instanceof Pellet)
+            set((int) ge._pos.x, (int) ge._pos.y, new Vide(new Vector2((int) ge._pos.x, (int) ge._pos.y), _world));
+        nbPellet=nbPellet-1;
+    }
+
+    public int getNbPellet() {
+        return nbPellet;
+    }
+
+    public void setNbPellet(int nbPellet) {
+        this.nbPellet = nbPellet;
     }
 
     public GameElement get(int x, int y) { return this._laby2[x][y]; }
@@ -148,7 +171,7 @@ public class Maze implements Iterable<GameElement>{
             elementArrivee=liste.get(elementArrivee);
             chemin.addFirst(elementArrivee);
         }
-        chemin.addFirst(depart);
+        chemin.addLast(arrivee);
         return chemin;
     }
 
@@ -180,6 +203,7 @@ public class Maze implements Iterable<GameElement>{
         if(geRight!=null &&!(geRight instanceof Block || geRight instanceof Barriere)){
             liste.add(geRight);
         }
+
         return liste;
     }
 

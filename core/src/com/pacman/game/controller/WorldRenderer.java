@@ -98,8 +98,10 @@ public class WorldRenderer {
         Vector2 tpS =new Vector2(14,0.1f);
         if(this.world.getPacman().getPosition().y==limiteN){
             this.world.getPacman().setPosition(tpS);
+            world.getMaze().mange(world.getMaze().get((int)tpS.x,limiteS));
         }else if(this.world.getPacman().getPosition().y==limiteS){
             this.world.getPacman().setPosition(tpN);
+            world.getMaze().mange(world.getMaze().get((int)tpN.x,limiteN));
         }
         if(this.world.getGhost1().getPosition().y==limiteN){
             this.world.getGhost1().setPosition(tpS);
@@ -129,16 +131,13 @@ public class WorldRenderer {
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Super || ge instanceof IntersectionPellet) {
+            if(ge instanceof IntersectionPellet || ge instanceof Pellet) {
                 if(ge instanceof Super) {
                     invincibilite();
                 }
-                this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
+                world.getMaze().mange(ge);
                 this.score+=10;
-            }
-            else if(ge instanceof Pellet) {
-                this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(new Vector2((int)pos.x,(int)pos.y),this.world));
-                this.score+=10;
+                System.out.println(world.getMaze().getNbPellet());
             }
         }
     }
