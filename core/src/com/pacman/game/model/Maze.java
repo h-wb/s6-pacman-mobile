@@ -171,7 +171,7 @@ public class Maze implements Iterable<GameElement>{
             elementArrivee=liste.get(elementArrivee);
             chemin.addFirst(elementArrivee);
         }
-        chemin.addFirst(depart);
+        chemin.addLast(arrivee);
         return chemin;
     }
 
@@ -203,6 +203,7 @@ public class Maze implements Iterable<GameElement>{
         if(geRight!=null &&!(geRight instanceof Block || geRight instanceof Barriere)){
             liste.add(geRight);
         }
+
         return liste;
     }
 
