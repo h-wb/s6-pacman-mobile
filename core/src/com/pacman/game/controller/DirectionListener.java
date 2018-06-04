@@ -7,7 +7,6 @@ import com.pacman.game.model.World;
 public class DirectionListener implements  GestureListener {
 
     private World _world;
-    private String message = "No gesture performed yet";
 
     public DirectionListener( World world) {
         _world = world;
@@ -41,7 +40,7 @@ public class DirectionListener implements  GestureListener {
             if(velocityX>0){
                 update(new Vector2(+moveAmount,0));
             }else{
-                update(new Vector2(+moveAmount,0));
+                update(new Vector2(-moveAmount,0));
             }
         }else{
             if(velocityY>0){
