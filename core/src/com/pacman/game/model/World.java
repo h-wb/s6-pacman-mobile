@@ -17,7 +17,7 @@ public class World implements Iterable<GameElement>
     private Boolean dead = false;
 
     public World() {
-        this._pacman = new Pacman(new Vector2(1,1), this);
+        this._pacman = new Pacman(new Vector2(23,14), this);
         this._ghost1 = new Ghost1(new Vector2(13,14),this, escape, dead);
         this._ghost2 = new Ghost2(new Vector2(13,14),this, escape, dead);
         this._ghost3 = new Ghost3(new Vector2(13,14),this, escape, dead);

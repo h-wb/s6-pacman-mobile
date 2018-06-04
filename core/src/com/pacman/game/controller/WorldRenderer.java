@@ -41,11 +41,20 @@ public class WorldRenderer {
     private BitmapFont font;
     private float ppuX, ppuY;
     private int score;
-    float time=0;
-    float escapeTime = 0;
+    private float time;
+    private float compteurInvincibilite;
     long startTime;
     long globalEscapeTime;
     private boolean barrieres;
+
+
+
+
+
+    /*****PARAMETRES DE JEU*****/
+    private int invincibiliteTime = 5; //en secondes : temps d'invicibilité de Pacman après avoir mangé une super pac-gomme
+    private int barriereTime = 5; //en secondes : temps avec que la barrière disparaisse
+
 
     public WorldRenderer(World world, Game game) {
         this.world = world;
@@ -56,29 +65,20 @@ public class WorldRenderer {
         startTime = System.currentTimeMillis();
         globalEscapeTime = System.nanoTime();
         this.barrieres=true;
+
     }
 
     public void render(float delta) {
+        deplacement();
+        animation(delta);
+        doitSortir(delta);
 
-        long time = ((System.currentTimeMillis() - startTime) / 1000);
-        if(barrieres(delta)){
-            this.world.getMaze().enleveBarriere();
-            this.world.getGhost1().setDoitSortir(true);
-            this.world.getGhost2().setDoitSortir(true);
-            this.world.getGhost3().setDoitSortir(true);
-        }
-
-        this.world.getPacman().deplacement();
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
             if(ge instanceof Super || ge instanceof IntersectionPellet) {
                 if(ge instanceof Super) {
-                    this.world.getGhost1().setEscape(true);
-                    this.world.getGhost2().setEscape(true);
-                    this.world.getGhost3().setEscape(true);
-                    this.world.getGhost4().setEscape(true);
-                    escapeTime = 0;
+                    invincibilite();
                 }
                 this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
                 this.score+=10;
@@ -91,42 +91,26 @@ public class WorldRenderer {
 
 
         if(this.world.getGhost1().getEscape()|| this.world.getGhost2().getEscape() || this.world.getGhost3().getEscape() || this.world.getGhost4().getEscape()) {
-            setTimeEscape(delta);
+            checkInvincibiliteTime(delta);
 
 
             if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())) {
-                System.out.println("ghost1");
                 this.world.getGhost1().setEscape(false);
                 this.world.getGhost1().setDead(true);
             }
             if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle())) {
                 this.world.getGhost2().setEscape(false);
                 this.world.getGhost2().setDead(true);
-                System.out.println("ghost2");
             }
             if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())) {
                 this.world.getGhost3().setEscape(false);
                 this.world.getGhost3().setDead(true);
-                System.out.println("ghost3");
             }
             if (this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())) {
                 this.world.getGhost4().setEscape(false);
                 this.world.getGhost4().setDead(true);
-                System.out.println("ghost4");
             }
         }
-
-
-
-
-        this.world.getGhost1().deplacement();
-        this.world.getGhost2().deplacement();
-        this.world.getGhost3().deplacement();
-        this.world.getGhost4().deplacement();
-        TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
-        texturePacman.render(delta);
-
-
 
 
         this.spriteBatch.begin();
@@ -139,40 +123,81 @@ public class WorldRenderer {
                     element.getHeight() * ppuY
             );
         }
-        font.draw(spriteBatch,"Score:"+ Integer.toString(score), 0, (this.world.getHeight()+1)*ppuY);
-        font.draw(spriteBatch,"Temps écoulé = " + time +'s', (this.world.getWidth()-6)*ppuX, (this.world.getHeight()+1)*ppuY);
 
-        //Collision fantôme/pacman (un peu longe ptet)
-        if((this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) && !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())&& !this.world.getGhost1().getEscape())){
-            game.setScreen(new EndScreen(game, score, time, world, ppuX, ppuY));
-        }
-
-
-
-
+        setPanel();
+        checkGameOver();
 
         this.spriteBatch.end();
     }
 
-    public boolean barrieres(float deltaTime){
+
+    /*****Methoqe qui initialise les déplacements de chaque MoveableElement*****/
+    private void deplacement(){
+        this.world.getPacman().deplacement();
+        this.world.getGhost1().deplacement();
+        this.world.getGhost2().deplacement();
+        this.world.getGhost3().deplacement();
+        this.world.getGhost4().deplacement();
+    }
+
+    /*****Methoqe qui initialise les animations*****/
+    private void animation(float delta){
+        TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
+        texturePacman.render(delta);
+    }
+
+    private boolean barrieres(float deltaTime){
         time += deltaTime;
-        if(time >= 5 && barrieres){
+        if(time >= barriereTime && barrieres){
             barrieres=false;
             return true;
         }
         return false;
     }
 
-    public boolean setTimeEscape(float deltaTime){
-        escapeTime += deltaTime;
-        if(escapeTime >= 7){
+    private void checkInvincibiliteTime(float deltaTime){
+        compteurInvincibilite += deltaTime;
+        if(compteurInvincibilite >= invincibiliteTime){
             this.world.getGhost1().setEscape(false);
             this.world.getGhost2().setEscape(false);
             this.world.getGhost3().setEscape(false);
             this.world.getGhost4().setEscape(false);
+        }
+    }
+
+    /*****Méthode qui passe les fantômes en mode fuite si Pacman a mangé une super pac-gomme*****/
+    private void invincibilite(){
+        this.world.getGhost1().setEscape(true);
+        this.world.getGhost2().setEscape(true);
+        this.world.getGhost3().setEscape(true);
+        this.world.getGhost4().setEscape(true);
+        compteurInvincibilite = 0;
 
         }
-        return false;
+
+
+    /*****Methode qui force les fantômes à sortir de la maison si la barrière est ouverte*****/
+    private void doitSortir(float delta){
+        if(barrieres(delta)){
+            this.world.getMaze().enleveBarriere();
+            this.world.getGhost1().setDoitSortir(true);
+            this.world.getGhost2().setDoitSortir(true);
+            this.world.getGhost3().setDoitSortir(true);
+            this.world.getGhost4().setDoitSortir(true);
+        }
+    }
+
+    /****Methode affichant le panel de score et de temps*****/
+    private void setPanel(){
+        font.draw(spriteBatch,"Score:"+ Integer.toString(score), 0, (this.world.getHeight()+1)*ppuY);
+        font.draw(spriteBatch,"Temps écoulé = " + (int)time +'s', (this.world.getWidth()-7)*ppuX, (this.world.getHeight()+1)*ppuY);
+    }
+
+    /*****Methode qui amène vers le Endscreen si Pacman touche un fantôme dont l'état n'est ni Escape ni Dead.*****/
+    private void checkGameOver(){
+        if((this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) && !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())&& !this.world.getGhost1().getEscape())){
+            game.setScreen(new EndScreen(game, score, (long)time, world, ppuX, ppuY));
+        }
     }
 
     public void setPpuX(float ppuX) {
