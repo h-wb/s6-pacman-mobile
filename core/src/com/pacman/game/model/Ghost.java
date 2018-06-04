@@ -11,14 +11,29 @@ import java.util.LinkedList;
 
 public abstract class Ghost extends MoveableElement {
 
-    private float vitesse = 0.050f;
+    private float vitesse = 0.1f;
 
     protected boolean doitSortir;
+
+    protected boolean clignote;
 
     public Ghost(Vector2 pos, World w) {
         super(pos, w);
         _vel = new Vector2(0, 0);
         doitSortir = false;
+        clignote=false;
+    }
+
+    public boolean isDoitSortir() {
+        return doitSortir;
+    }
+
+    public boolean isClignote() {
+        return clignote;
+    }
+
+    public void setClignote(boolean clignote) {
+        this.clignote = clignote;
     }
 
     public void setDoitSortir(boolean doitSortir) {
@@ -170,7 +185,6 @@ public abstract class Ghost extends MoveableElement {
             doitSortir=false;
         }
 
-        //System.out.println(_vel);
 
         _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
         _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;

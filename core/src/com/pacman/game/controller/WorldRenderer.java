@@ -15,6 +15,8 @@ import com.pacman.game.model.Ghost;
 import com.pacman.game.model.Barriere;
 import com.pacman.game.model.Ghost1;
 import com.pacman.game.model.Ghost2;
+import com.pacman.game.model.Ghost3;
+import com.pacman.game.model.Ghost4;
 import com.pacman.game.model.Intersection;
 import com.pacman.game.model.IntersectionPellet;
 import com.pacman.game.model.Maison;
@@ -30,6 +32,8 @@ import com.pacman.game.screen.GameScreen;
 import com.pacman.game.view.TextureFactory;
 import com.pacman.game.view.TextureGhost1;
 import com.pacman.game.view.TextureGhost2;
+import com.pacman.game.view.TextureGhost3;
+import com.pacman.game.view.TextureGhost4;
 import com.pacman.game.view.TexturePacman;
 import com.pacman.game.view.TextureSuper;
 
@@ -54,7 +58,7 @@ public class WorldRenderer {
     /*****PARAMETRES DE JEU*****/
     private int invincibiliteTime = 5; //en secondes : temps d'invicibilité de Pacman après avoir mangé une super pac-gomme
     private int barriereTime = 5; //en secondes : temps avec que la barrière disparaisse
-
+    private int clignoteTime = 2;
 
     public WorldRenderer(World world, Game game) {
         this.world = world;
@@ -138,7 +142,6 @@ public class WorldRenderer {
         int limiteS=0;
         Vector2 tpN =new Vector2(14,26.9f);
         Vector2 tpS =new Vector2(14,0.1f);
-        System.out.println(this.world.getPacman().getPosition().y);
         if(this.world.getPacman().getPosition().y==limiteN){
             this.world.getPacman().setPosition(tpS);
         }else if(this.world.getPacman().getPosition().y==limiteS){
@@ -181,6 +184,18 @@ public class WorldRenderer {
     private void animation(float delta){
         TexturePacman texturePacman = (TexturePacman) TextureFactory.getInstance(world).getTexturable(Pacman.class);
         texturePacman.render(delta);
+
+        TextureGhost1 textureGhost1 = (TextureGhost1) TextureFactory.getInstance(world).getTexturable(Ghost1.class);
+        textureGhost1.render(delta);
+
+        TextureGhost2 textureGhost2 = (TextureGhost2) TextureFactory.getInstance(world).getTexturable(Ghost2.class);
+        textureGhost2.render(delta);
+
+        TextureGhost3 textureGhost3 = (TextureGhost3) TextureFactory.getInstance(world).getTexturable(Ghost3.class);
+        textureGhost3.render(delta);
+
+        TextureGhost4 textureGhost4 = (TextureGhost4) TextureFactory.getInstance(world).getTexturable(Ghost4.class);
+        textureGhost4.render(delta);
     }
 
     private boolean barrieres(float deltaTime){
@@ -200,6 +215,18 @@ public class WorldRenderer {
             this.world.getGhost3().setEscape(false);
             this.world.getGhost4().setEscape(false);
         }
+        if(invincibiliteTime-compteurInvincibilite <= clignoteTime) {
+            this.world.getGhost1().setClignote(true);
+            this.world.getGhost2().setClignote(true);
+            this.world.getGhost3().setClignote(true);
+            this.world.getGhost4().setClignote(true);
+        }
+        else{
+            this.world.getGhost1().setClignote(false);
+            this.world.getGhost2().setClignote(false);
+            this.world.getGhost3().setClignote(false);
+            this.world.getGhost4().setClignote(false);
+        }
     }
 
     /*****Méthode qui passe les fantômes en mode fuite si Pacman a mangé une super pac-gomme*****/
@@ -208,6 +235,7 @@ public class WorldRenderer {
         this.world.getGhost2().setEscape(true);
         this.world.getGhost3().setEscape(true);
         this.world.getGhost4().setEscape(true);
+
         compteurInvincibilite = 0;
 
         }

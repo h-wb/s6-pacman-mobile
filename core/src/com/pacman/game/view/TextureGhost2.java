@@ -18,6 +18,7 @@ public class TextureGhost2 implements iTexturable
         _seuil = seuil;
         _textureBASE = new Texture(Gdx.files.internal("ghost2.png"));
         _textureESCAPING = new Texture(Gdx.files.internal("ghostEscaping.png"));
+        _textureCLIGNOTE = new Texture(Gdx.files.internal("ghostClignote.png"));
         _textureDEAD = new Texture(Gdx.files.internal("ghostDead.png"));
         _textureLEFT = new Texture(Gdx.files.internal("ghost2-left.png"));
         _textureRIGHT = new Texture(Gdx.files.internal("ghost2-right.png"));
@@ -32,6 +33,8 @@ public class TextureGhost2 implements iTexturable
 
     public Texture getTexture () {
         if(_ghost2.getEscape()){
+            if (_ghost2.isClignote() && _deltaT < (_seuil / 2.0))
+                return _textureCLIGNOTE;
             return _textureESCAPING;
         }
         else if(_ghost2.getDead()){
