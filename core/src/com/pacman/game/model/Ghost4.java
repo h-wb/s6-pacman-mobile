@@ -27,8 +27,8 @@ public class Ghost4 extends Ghost {
                 deplacementLargeur();
             }
         } else {
-            _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-            _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+            _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+            _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
         }
 
     }

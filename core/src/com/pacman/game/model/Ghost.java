@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 public abstract class Ghost extends MoveableElement {
 
-    private float vitesse = 0.1f;
+    private float vitesse = 0.050f;
 
     protected boolean doitSortir;
 
@@ -144,8 +144,8 @@ public abstract class Ghost extends MoveableElement {
 
         int direction = (int) (Math.random() * (velocityPossible.size()));
         _vel = velocityPossible.get(direction);
-        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
 
     }
 
@@ -171,8 +171,9 @@ public abstract class Ghost extends MoveableElement {
         }
 
         //System.out.println(_vel);
-        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
 
     }
 
@@ -328,8 +329,8 @@ public abstract class Ghost extends MoveableElement {
         }
 
 
-        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
     }
 
     protected void deplacementMinim() {
@@ -483,8 +484,8 @@ public abstract class Ghost extends MoveableElement {
             }
         }
 
-        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
     }
 
     protected void deplacementMaison() {
@@ -639,8 +640,8 @@ public abstract class Ghost extends MoveableElement {
         }
 
 
-        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
     }
 
     public void deplacementLargeur() {
@@ -664,7 +665,7 @@ public abstract class Ghost extends MoveableElement {
                 }
             }
         }
-        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
-        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
     }
 }
