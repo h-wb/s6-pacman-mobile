@@ -2,14 +2,13 @@ package com.pacman.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.pacman.game.model.Ghost2;
 import com.pacman.game.model.Ghost4;
 import com.pacman.game.model.direction;
 
 public class TextureGhost4 implements iTexturable
 {
     private Ghost4 _ghost4;
-    private Texture _textureBASE, _textureESCAPING, _textureDEAD;
+    private Texture _textureBASE,_textureLEFT,_textureRIGHT,_textureUP, _textureESCAPING, _textureDEAD, _textureCLIGNOTE;
     private double _deltaT;
     private double _seuil;
 
@@ -20,14 +19,10 @@ public class TextureGhost4 implements iTexturable
         _textureBASE = new Texture(Gdx.files.internal("ghost4.png"));
         _textureESCAPING = new Texture(Gdx.files.internal("ghostEscaping.png"));
         _textureDEAD = new Texture(Gdx.files.internal("ghostDead.png"));
-        /*_textureLEFT = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureLEFT2 = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureRIGHT = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureRIGHT2 = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureUP = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureUP2 = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureDOWN = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureDOWN2 = new Texture(Gdx.files.internal("ghost1.png"));*/
+        _textureLEFT = new Texture(Gdx.files.internal("ghost4-right.png"));
+        _textureRIGHT = new Texture(Gdx.files.internal("ghost4-left.png"));
+        _textureUP = new Texture(Gdx.files.internal("ghost4-up.png"));
+
 
     }
 
@@ -45,8 +40,15 @@ public class TextureGhost4 implements iTexturable
             return _textureDEAD;
         }
         else{
+            if (_ghost4.direction() == direction.DOWN)
+                return _textureBASE;
+            if (_ghost4.direction() == direction.LEFT)
+                return _textureLEFT;
+            if (_ghost4.direction() == direction.RIGHT)
+                return _textureRIGHT;
+            if (_ghost4.direction() == direction.UP)
+                return _textureUP;
             return _textureBASE;
-
         }
     }
 }

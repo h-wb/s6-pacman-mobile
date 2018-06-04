@@ -154,21 +154,30 @@ public class Maze implements Iterable<GameElement>{
 
     public ArrayList<GameElement> sommetsVoisins(GameElement s) {
         ArrayList<GameElement> liste=new ArrayList<GameElement>();
-        GameElement geUp = get((int)s._pos.x, (int) s._pos.y + 1);
-        GameElement geDown = get((int) s._pos.x, (int) s._pos.y - 1);
-        GameElement geRight = get((int) s._pos.x + 1, (int) s._pos.y);
-        GameElement geLeft = get((int) s._pos.x - 1, (int) s._pos.y);
+        GameElement geUp = null,geDown=null,geLeft=null,geRight=null;
+        if(s._pos.y + 1<getHeight()){
+             geUp = get((int)s._pos.x, (int) s._pos.y + 1);
+        }
+        if(s._pos.y - 1>=0){
+            geDown = get((int) s._pos.x, (int) s._pos.y - 1);
+        }
+        if(s._pos.x + 1<getWidth()){
+            geRight = get((int) s._pos.x + 1, (int) s._pos.y);
+        }
+        if(s._pos.y - 1>=0){
+            geLeft = get((int) s._pos.x - 1, (int) s._pos.y);
+        }
 
-        if(!(geUp instanceof Block || geUp instanceof Barriere)){
+        if(geUp!=null && !(geUp instanceof Block || geUp instanceof Barriere)){
             liste.add(geUp);
         }
-        if(!(geDown instanceof Block || geDown instanceof Barriere)){
+        if(geDown!=null &&!(geDown instanceof Block || geDown instanceof Barriere)){
             liste.add(geDown);
         }
-        if(!(geLeft instanceof Block || geLeft instanceof Barriere)){
+        if(geLeft!=null &&!(geLeft instanceof Block || geLeft instanceof Barriere)){
             liste.add(geLeft);
         }
-        if(!(geRight instanceof Block || geRight instanceof Barriere)){
+        if(geRight!=null &&!(geRight instanceof Block || geRight instanceof Barriere)){
             liste.add(geRight);
         }
         return liste;

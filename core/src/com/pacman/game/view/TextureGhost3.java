@@ -9,7 +9,7 @@ import com.pacman.game.model.direction;
 public class TextureGhost3 implements iTexturable
 {
     private Ghost3 _ghost3;
-    private Texture _textureBASE, _textureESCAPING, _textureDEAD;
+    private Texture _textureBASE,_textureLEFT,_textureRIGHT,_textureUP, _textureESCAPING, _textureDEAD, _textureCLIGNOTE;
     private double _deltaT;
     private double _seuil;
 
@@ -20,14 +20,9 @@ public class TextureGhost3 implements iTexturable
         _textureBASE = new Texture(Gdx.files.internal("ghost3.png"));
         _textureESCAPING = new Texture(Gdx.files.internal("ghostEscaping.png"));
         _textureDEAD = new Texture(Gdx.files.internal("ghostDead.png"));
-        /*_textureLEFT = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureLEFT2 = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureRIGHT = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureRIGHT2 = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureUP = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureUP2 = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureDOWN = new Texture(Gdx.files.internal("ghost1.png"));
-        _textureDOWN2 = new Texture(Gdx.files.internal("ghost1.png"));*/
+        _textureLEFT = new Texture(Gdx.files.internal("ghost3-left.png"));
+        _textureRIGHT = new Texture(Gdx.files.internal("ghost3-right.png"));
+        _textureUP = new Texture(Gdx.files.internal("ghost3-up.png"));
 
     }
 
@@ -45,8 +40,15 @@ public class TextureGhost3 implements iTexturable
             return _textureDEAD;
         }
         else{
+            if (_ghost3.direction() == direction.DOWN)
+                return _textureBASE;
+            if (_ghost3.direction() == direction.LEFT)
+                return _textureLEFT;
+            if (_ghost3.direction() == direction.RIGHT)
+                return _textureRIGHT;
+            if (_ghost3.direction() == direction.UP)
+                return _textureUP;
             return _textureBASE;
-
         }
     }
 }
