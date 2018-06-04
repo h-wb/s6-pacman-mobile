@@ -16,11 +16,11 @@ public class Ghost2 extends Ghost {
         if (_pos.x % 1 == 0 && _pos.y % 1 == 0) {
             if (_dead) {
                 deplacementMaison();
-            } else if (_escape) {
+            } else if ((ge instanceof Intersection || ge instanceof Super)&&_escape) {
                 deplacementFuite();
             } else if (doitSortir) {
                 sortirMaison();
-            } else if (ge instanceof Intersection || ge instanceof Maison || ge instanceof Super) {
+            } else if (ge instanceof Intersection || ge instanceof Super) {
                 deplacementMinim();
             } else {
                 _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;

@@ -16,15 +16,18 @@ public class Ghost4 extends Ghost {
     @Override
     public void deplacement() {
         GameElement ge = _world.getMaze().get((int) _pos.x, (int) _pos.y);
-        if (_pos.x % 1 == 0 && _pos.y % 1 == 0) {
-            if (_dead) {
+        if (_pos.x % 1 == 0 && _pos.y%1 == 0) {
+            if (!_dead&&!_escape&&!doitSortir) {
+                deplacementLargeur();
+            } else if (_dead) {
                 deplacementMaison();
-            } else if (_escape) {
+            } else if ((ge instanceof Intersection || ge instanceof Super)&&_escape) {
                 deplacementFuite();
             } else if (doitSortir) {
                 sortirMaison();
-            } else if (!(ge instanceof Block || ge instanceof Barriere)) {
-                deplacementLargeur();
+            } else {
+                _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
+                _pos.y = (float) Math.round((_pos.y + _vel.y) * 100) / 100;
             }
         } else {
             _pos.x = (float) Math.round((_pos.x + _vel.x) * 100) / 100;
