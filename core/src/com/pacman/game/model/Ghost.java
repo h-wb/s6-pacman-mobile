@@ -18,7 +18,7 @@ public abstract class Ghost extends MoveableElement {
     public Ghost(Vector2 pos, World w) {
         super(pos, w);
         _vel = new Vector2(0, 0);
-        doitSortir=false;
+        doitSortir = false;
     }
 
     public void setDoitSortir(boolean doitSortir) {
@@ -79,16 +79,24 @@ public abstract class Ghost extends MoveableElement {
     }
 
     @Override
-    public boolean getEscape() { return _escape; }
+    public boolean getEscape() {
+        return _escape;
+    }
 
     @Override
-    public void setEscape(Boolean escape) { _escape = escape;}
+    public void setEscape(Boolean escape) {
+        _escape = escape;
+    }
 
     @Override
-    public boolean getDead() { return _dead; }
+    public boolean getDead() {
+        return _dead;
+    }
 
     @Override
-    public void setDead(Boolean dead) { _dead = dead;}
+    public void setDead(Boolean dead) {
+        _dead = dead;
+    }
 
 
     public Object direction() {
@@ -143,23 +151,24 @@ public abstract class Ghost extends MoveableElement {
 
 
     protected void sortirMaison() {
-        GameElement geUp, geDown, geRight, geLeft;
+        GameElement geUp, geDown, geLeft;
         geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
         geDown = _world.getMaze().get((int) _pos.x, (int) _pos.y - 1);
-        geRight = _world.getMaze().get((int) _pos.x + 1, (int) _pos.y);
         geLeft = _world.getMaze().get((int) _pos.x - 1, (int) _pos.y);
 
-        Barriere sortie=this._world.getMaze().getBarierres()[0];
-        if(sortie._pos.x<=_pos.x && !(geLeft instanceof Block)){
+        Barriere sortie = this._world.getMaze().getBarierres()[0];
+        if (sortie._pos.x-1 <= _pos.x && !(geLeft instanceof Block)) {
             _vel = (new Vector2(-vitesse, 0));
-        }
-        else if(!(geDown instanceof Block) && sortie._pos.y<_pos.y){
+        } else if (!(geDown instanceof Block) && sortie._pos.y < _pos.y) {
             _vel = (new Vector2(0, -vitesse));
-        }
-        else if( !(geUp instanceof Block) && sortie._pos.y>_pos.y){
+        } else if (!(geUp instanceof Block) && sortie._pos.y > _pos.y) {
             _vel = (new Vector2(0, vitesse));
         }
 
+
+        if(sortie._pos.x==_pos.x){
+            doitSortir=false;
+        }
 
         //System.out.println(_vel);
         _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
@@ -474,14 +483,13 @@ public abstract class Ghost extends MoveableElement {
             }
         }
 
-
         _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
         _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
     }
 
     protected void deplacementMaison() {
         float diff_x = 13 - _pos.x;
-        float diff_y = 14- _pos.y;
+        float diff_y = 14 - _pos.y;
         GameElement geUp, geDown, geRight, geLeft;
         geUp = _world.getMaze().get((int) _pos.x, (int) _pos.y + 1);
         geDown = _world.getMaze().get((int) _pos.x, (int) _pos.y - 1);
@@ -635,25 +643,24 @@ public abstract class Ghost extends MoveableElement {
         _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
     }
 
-    public void deplacementLargeur(){
-        LinkedList liste=this._world.getMaze().parcoursEnLargeur(this,this._world.getPacman());
-        if((GameElement) liste.removeFirst()==this._world.getMaze().get((int)_pos.x,(int)_pos.y)){
-            _vel=new Vector2(0,0);
-        }
-        else if (liste.size()>1){
-            GameElement next=(GameElement) liste.get(1);
-            if(next!=null){
-                if(next._pos.x-_pos.x==1){
-                    _vel=new Vector2(vitesse,0);
+    public void deplacementLargeur() {
+        LinkedList liste = this._world.getMaze().parcoursEnLargeur(this, this._world.getPacman());
+        if ((GameElement) liste.removeFirst() == this._world.getMaze().get((int) _pos.x, (int) _pos.y)) {
+            _vel = new Vector2(0, 0);
+        } else if (liste.size() > 1) {
+            GameElement next = (GameElement) liste.get(1);
+            if (next != null) {
+                if (next._pos.x - _pos.x == 1) {
+                    _vel = new Vector2(vitesse, 0);
                 }
-                if(next._pos.x-_pos.x==-1){
-                    _vel=new Vector2(-vitesse,0);
+                if (next._pos.x - _pos.x == -1) {
+                    _vel = new Vector2(-vitesse, 0);
                 }
-                if(next._pos.y-_pos.y==1){
-                    _vel=new Vector2(0,vitesse);
+                if (next._pos.y - _pos.y == 1) {
+                    _vel = new Vector2(0, vitesse);
                 }
-                if(next._pos.y-_pos.y==-1){
-                    _vel=new Vector2(0,-vitesse);
+                if (next._pos.y - _pos.y == -1) {
+                    _vel = new Vector2(0, -vitesse);
                 }
             }
         }
