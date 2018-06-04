@@ -98,8 +98,10 @@ public class WorldRenderer {
         Vector2 tpS =new Vector2(14,0.1f);
         if(this.world.getPacman().getPosition().y==limiteN){
             this.world.getPacman().setPosition(tpS);
+            world.getMaze().mange(world.getMaze().get((int)tpS.x,limiteS));
         }else if(this.world.getPacman().getPosition().y==limiteS){
             this.world.getPacman().setPosition(tpN);
+            world.getMaze().mange(world.getMaze().get((int)tpN.x,limiteN));
         }
         if(this.world.getGhost1().getPosition().y==limiteN){
             this.world.getGhost1().setPosition(tpS);
