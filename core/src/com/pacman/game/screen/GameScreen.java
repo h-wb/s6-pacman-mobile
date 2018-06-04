@@ -34,7 +34,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(new Listener(this._world));
         Gdx.input.setInputProcessor(new DirectionListener(listener,        this._world));
     }
-
+//dd
 
     public World getWorld() { return this._world; }
 
