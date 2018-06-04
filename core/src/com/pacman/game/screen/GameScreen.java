@@ -3,6 +3,7 @@ package com.pacman.game.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.GestureDetector;
@@ -25,15 +26,12 @@ public class GameScreen implements Screen {
         this._game = game;
         this._world = new World();
         this._worldRenderer = new WorldRenderer(this._world, this._game);
-        Gdx.input.setInputProcessor(new Listener(this._world));
+        InputMultiplexer im = new InputMultiplexer();
+        im.addProcessor(new GestureDetector(new DirectionListener(this._world)));
+        im.addProcessor(new Listener(this._world));
+        Gdx.input.setInputProcessor(im);
     }
 
-    public GameScreen() {
-        this._world = new World();
-        this._worldRenderer = new WorldRenderer(this._world, this._game);
-        Gdx.input.setInputProcessor(new Listener(this._world));
-    }
-//dd
 
     public World getWorld() { return this._world; }
 

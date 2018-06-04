@@ -19,6 +19,21 @@ public class DirectionListener implements  GestureListener {
     }
 
     @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean tap(float x, float y, int count, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
+
+    @Override
     public boolean fling(float velocityX, float velocityY, int button) {
         float moveAmount = 0.1f;
         if(Math.abs(velocityX)>Math.abs(velocityY)){
@@ -38,31 +53,9 @@ public class DirectionListener implements  GestureListener {
         return true;
     }
 
-
-
     @Override
-    public boolean touchDown(float x, float y, int pointer, int button) {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public boolean tap(float x, float y, int count, int button) {
-        message = "Tap performed, finger" + Integer.toString(button);
-        return true;
-    }
-
-    @Override
-    public boolean longPress(float x, float y) {
-        message = "Long press performed";
-        return true;
-    }
-
-     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        message = "Pan performed, delta:" + Float.toString(deltaX) +
-                "," + Float.toString(deltaY);
-        return true;
+        return false;
     }
 
     @Override
@@ -72,21 +65,18 @@ public class DirectionListener implements  GestureListener {
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        message = "Zoom performed, initial Distance:" + Float.toString(initialDistance) +
-                " Distance: " + Float.toString(distance);
-        return true;
+        return false;
     }
 
     @Override
-    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
-                         Vector2 pointer1, Vector2 pointer2) {
-        message = "Pinch performed";
-        return true;
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
     }
 
     @Override
     public void pinchStop() {
 
     }
+
 
 }
