@@ -69,6 +69,7 @@ public class WorldRenderer {
     }
 
     public void render(float delta) {
+        teleportation();
         deplacement();
         animation(delta);
         doitSortir(delta);
@@ -124,17 +125,46 @@ public class WorldRenderer {
             );
         }
 
-        teleportation();
+
         setPanel();
         checkGameOver();
 
         this.spriteBatch.end();
     }
 
+    /*****Methoqe qui téléporte les MoveableElement (très moyen, accéder à superclasse MoveableElement commment?)*****/
     private void teleportation(){
-           if (this.world.getME().getRectangle().overlaps(new Rectangle(3,1,1,1))){
-            System.out.println("fsfsdf");
+        int limiteN=27;
+        int limiteS=0;
+        Vector2 tpN =new Vector2(14,26.9f);
+        Vector2 tpS =new Vector2(14,0.1f);
+        System.out.println(this.world.getPacman().getPosition().y);
+        if(this.world.getPacman().getPosition().y==limiteN){
+            this.world.getPacman().setPosition(tpS);
+        }else if(this.world.getPacman().getPosition().y==limiteS){
+            this.world.getPacman().setPosition(tpN);
         }
+        if(this.world.getGhost1().getPosition().y==limiteN){
+            this.world.getGhost1().setPosition(tpS);
+        }else if(this.world.getGhost1().getPosition().y==limiteS){
+            this.world.getGhost1().setPosition(tpN);
+        }
+        if(this.world.getGhost2().getPosition().y==limiteN){
+            this.world.getGhost2().setPosition(tpS);
+        }else if(this.world.getGhost2().getPosition().y==limiteS){
+            this.world.getGhost2().setPosition(tpN);
+        }
+        if(this.world.getGhost3().getPosition().y==limiteN){
+            this.world.getGhost3().setPosition(tpS);
+        }else if(this.world.getGhost3().getPosition().y==limiteS){
+            this.world.getGhost3().setPosition(tpN);
+        }
+        if(this.world.getGhost4().getPosition().y==limiteN){
+            this.world.getGhost4().setPosition(tpS);
+        }else if(this.world.getGhost4().getPosition().y==limiteS){
+            this.world.getGhost4().setPosition(tpN);
+        }
+
     }
 
 
@@ -155,7 +185,7 @@ public class WorldRenderer {
 
     private boolean barrieres(float deltaTime){
         time += deltaTime;
-        if(time >= 5 && barrieres){
+        if(time >= barriereTime && barrieres){
             barrieres=false;
             return true;
         }

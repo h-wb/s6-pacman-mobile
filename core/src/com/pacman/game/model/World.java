@@ -35,8 +35,6 @@ public class World implements Iterable<GameElement>
 
     public Ghost4 getGhost4() { return _ghost4; }
 
-    public Ghost getGhost() { return _ghost; }
-
     public MoveableElement getME() { return _ME; }
 
     public Maze getMaze() { return this._maze; }
