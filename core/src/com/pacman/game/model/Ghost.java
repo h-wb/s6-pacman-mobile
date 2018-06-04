@@ -7,16 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.pacman.game.screen.EndScreen;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class Ghost extends MoveableElement {
 
     private float vitesse = 0.1f;
 
-    protected boolean doitSortir=false;
+    protected boolean doitSortir;
 
     public Ghost(Vector2 pos, World w) {
         super(pos, w);
         _vel = new Vector2(0, 0);
+        doitSortir=false;
     }
 
     public void setDoitSortir(boolean doitSortir) {
@@ -629,6 +631,32 @@ public abstract class Ghost extends MoveableElement {
         }
 
 
+        _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
+        _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
+    }
+
+    public void deplacementLargeur(){
+        LinkedList liste=this._world.getMaze().parcoursEnLargeur(this,this._world.getPacman());
+        if((GameElement) liste.removeFirst()==this._world.getMaze().get((int)_pos.x,(int)_pos.y)){
+            _vel=new Vector2(0,0);
+        }
+        else if (liste.size()>1){
+            GameElement next=(GameElement) liste.get(1);
+            if(next!=null){
+                if(next._pos.x-_pos.x==1){
+                    _vel=new Vector2(vitesse,0);
+                }
+                if(next._pos.x-_pos.x==-1){
+                    _vel=new Vector2(-vitesse,0);
+                }
+                if(next._pos.y-_pos.y==1){
+                    _vel=new Vector2(0,vitesse);
+                }
+                if(next._pos.y-_pos.y==-1){
+                    _vel=new Vector2(0,-vitesse);
+                }
+            }
+        }
         _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;
         _pos.y = (float) Math.round((_pos.y + _vel.y) * 10) / 10;
     }

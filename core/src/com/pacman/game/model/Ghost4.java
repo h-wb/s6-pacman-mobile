@@ -2,6 +2,8 @@ package com.pacman.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.LinkedList;
+
 public class Ghost4 extends Ghost {
 
     public Ghost4(Vector2 pos, World w, Boolean escape, Boolean dead) {
@@ -23,7 +25,7 @@ public class Ghost4 extends Ghost {
                 sortirMaison();
             }
             else if((_pos.x%1==0&&_pos.y%1==0) && (ge instanceof Intersection || ge instanceof Maison || ge instanceof Super)) {
-                deplacementMinim();
+                deplacementLargeur();
             }
             else{
                 _pos.x = (float) Math.round((_pos.x + _vel.x) * 10) / 10;

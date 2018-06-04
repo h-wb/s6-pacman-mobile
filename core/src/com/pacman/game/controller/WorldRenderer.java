@@ -155,7 +155,7 @@ public class WorldRenderer {
 
     private boolean barrieres(float deltaTime){
         time += deltaTime;
-        if(time >= barriereTime && barrieres){
+        if(time >= 5 && barrieres){
             barrieres=false;
             return true;
         }
