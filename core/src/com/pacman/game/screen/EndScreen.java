@@ -20,14 +20,16 @@ public class EndScreen implements Screen {
     Game game;
     World world;
     private float ppuX, ppuY;
+    private boolean victoire;
 
-    public EndScreen(Game game, int score, long time, World world, float ppuX, float ppuY) {
+    public EndScreen(Game game, int score, long time, World world, float ppuX, float ppuY, boolean victoire) {
         this.score = score;
         this.game = game;
         this.world = world;
         this.ppuX = ppuX;
         this.ppuY = ppuY;
         this.time = time;
+        this.victoire = victoire;
     }
 
     @Override
@@ -38,25 +40,31 @@ public class EndScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
 
         font1.setColor(Color.RED);
+        font3.setColor(Color.GREEN);
 
         font1.getData().setScale(5f);
+        font3.getData().setScale(5f);
         font2.getData().setScale(3f);
 
         final GlyphLayout layout1 = new GlyphLayout(font1, "GAME OVER");
         final GlyphLayout layout2 = new GlyphLayout(font2, "SCORE FINAL:" + Integer.toString(score*(int)time));
-        final GlyphLayout layout3 = new GlyphLayout(font3, "Appuez sur entrée pour recommencer");
+        final GlyphLayout layout3 = new GlyphLayout(font3, "VICTOIRE");
 
         final float fontX1=  (this.world.getWidth()*ppuX- layout1.width) / 2;
         final float fontY1 = (this.world.getHeight()*ppuY + layout1.height)-100;
         final float fontX2 =  (this.world.getWidth()*ppuX- layout2.width) / 2;
         final float fontY2 = (this.world.getHeight()*ppuY + layout2.height) / 2;
         final float fontX3=  (this.world.getWidth()*ppuX- layout3.width) / 2;
-        final float fontY3 = (this.world.getHeight()*ppuY + layout3.height) / 4;
+        final float fontY3 = (this.world.getHeight()*ppuY + layout3.height)-100;
 
+        if(victoire){
+            font3.draw(batch, layout3, fontX3, fontY3);
+        }else{
+            font1.draw(batch, layout1, fontX1, fontY1);
+        }
 
-        font1.draw(batch, layout1, fontX1, fontY1);
         font2.draw(batch, layout2, fontX2, fontY2);
-      // font3.draw(batch, layout3, fontX3, fontY3);
+
 
 
 

@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.input.GestureDetector;
 import com.pacman.game.PacmanGame;
+import com.pacman.game.controller.DirectionListener;
 import com.pacman.game.controller.Listener;
 import com.pacman.game.model.World;
 import com.pacman.game.view.TextureFactory;
@@ -17,6 +19,7 @@ public class GameScreen implements Screen {
     private World _world;
     private WorldRenderer _worldRenderer;
     private Game _game;
+   private  GestureDetector.GestureListener listener;
 
     public GameScreen(PacmanGame game) {
         this._game = game;
@@ -29,6 +32,7 @@ public class GameScreen implements Screen {
         this._world = new World();
         this._worldRenderer = new WorldRenderer(this._world, this._game);
         Gdx.input.setInputProcessor(new Listener(this._world));
+        Gdx.input.setInputProcessor(new DirectionListener(listener,        this._world));
     }
 
 
