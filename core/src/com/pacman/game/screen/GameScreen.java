@@ -32,7 +32,6 @@ public class GameScreen implements Screen {
         this._world = new World();
         this._worldRenderer = new WorldRenderer(this._world, this._game);
         Gdx.input.setInputProcessor(new Listener(this._world));
-        Gdx.input.setInputProcessor(new DirectionListener(listener,        this._world));
     }
 //dd
 
