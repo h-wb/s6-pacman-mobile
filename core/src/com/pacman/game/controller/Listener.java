@@ -6,8 +6,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.pacman.game.model.World;
 
-public class Listener implements InputProcessor {
+public class Listener implements InputProcessor{
 
+    private String message = "No gesture performed yet";
     private World _world;
 
     public Listener(World world) {
@@ -71,4 +72,6 @@ public class Listener implements InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+
 }
+

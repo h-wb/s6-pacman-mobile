@@ -54,7 +54,7 @@ public class WorldRenderer {
     /*****PARAMETRES DE JEU*****/
     private int invincibiliteTime = 5; //en secondes : temps d'invicibilité de Pacman après avoir mangé une super pac-gomme
     private int barriereTime = 5; //en secondes : temps avec que la barrière disparaisse
-    private float fantomeEscapeVitesse = 0.1f;
+    private float fantomeEscapeVitesse = 0.05f;
     private float fantomeMortVitesse = 0.2f;
     private float fantomeVitesse = 0.1f;
     private int clignoteTime = 2;
@@ -79,7 +79,6 @@ public class WorldRenderer {
         deplacement();
         animation(delta);
         doitSortir(delta);
-        checkGameOver();
         score();
         this.spriteBatch.begin();
         for (GameElement element : this.world) {
@@ -94,6 +93,7 @@ public class WorldRenderer {
         setPanel();
         checkInvincibiliteTime(delta);
         this.spriteBatch.end();
+        checkGameOver();
     }
 
     /*****Methode qui téléporte les MoveableElement (redondant, accéder à superclasse MoveableElement commment?)*****/
@@ -104,10 +104,12 @@ public class WorldRenderer {
         Vector2 tpS = new Vector2(14, 0.1f);
         if (this.world.getPacman().getPosition().y == limiteN) {
             this.world.getPacman().setPosition(tpS);
-            world.getMaze().mange(world.getMaze().get((int) tpS.x, limiteS));
-        } else if (this.world.getPacman().getPosition().y == limiteS) {
+            world.getMaze().mange(world.getMaze().get((int)tpS.x,limiteS));
+            this.score+=10;
+        }else if(this.world.getPacman().getPosition().y==limiteS){
             this.world.getPacman().setPosition(tpN);
-            world.getMaze().mange(world.getMaze().get((int) tpN.x, limiteN));
+            world.getMaze().mange(world.getMaze().get((int)tpN.x,limiteN));
+            this.score+=10;
         }
         if (this.world.getGhost1().getPosition().y == limiteN) {
             this.world.getGhost1().setPosition(tpS);
@@ -315,10 +317,13 @@ public class WorldRenderer {
         font.draw(spriteBatch, "Temps écoulé = " + (int) time + 's', (this.world.getWidth() - 7) * ppuX, (this.world.getHeight() + 1) * ppuY);
     }
 
-    /*****Methode qui amène vers le Endscreen si Pacman touche un fantôme dont l'état n'est ni Escape ni Dead.*****/
-    private void checkGameOver() {
-        if ((this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) && !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle()) && !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle()) && !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle()) && !this.world.getGhost1().getEscape())) {
-            game.setScreen(new EndScreen(game, score, (long) time, world, ppuX, ppuY));
+
+    /*****Methode qui amène vers le Endscreen si Pacman touche un fantôme dont l'état n'est ni Escape ni Dead. (encore redondant)*****/
+    private void checkGameOver(){
+        if(this.world.getMaze().getNbPellet() == 0){
+            game.setScreen(new EndScreen(game, score, (long)time, world, ppuX, ppuY, true));
+        }else if((this.world.getPacman().getRectangle().overlaps(this.world.getGhost2().getRectangle()) && !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost1().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost3().getRectangle())&& !this.world.getGhost1().getEscape()) || (this.world.getPacman().getRectangle().overlaps(this.world.getGhost4().getRectangle())&& !this.world.getGhost1().getEscape())){
+            game.setScreen(new EndScreen(game, score, (long)time, world, ppuX, ppuY, false));
         }
     }
 
