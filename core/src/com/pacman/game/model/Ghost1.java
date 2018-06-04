@@ -8,6 +8,7 @@ public class Ghost1 extends Ghost {
         super(pos, w);
         _escape = escape;
         _dead = dead;
+
     }
 
     @Override

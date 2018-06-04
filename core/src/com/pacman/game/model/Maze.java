@@ -1,6 +1,7 @@
 package com.pacman.game.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -91,8 +92,9 @@ public class Maze implements Iterable<GameElement>{
             x++;
         }
 
-        this._laby2[1][1]=new Intersection(new Vector2(1,1),_world);
-        System.out.print(this.iterator().next());
+        int startx=(int)_world.getPacman()._pos.x;
+        int starty=(int)_world.getPacman()._pos.y;
+        this._laby2[startx][starty]=new Intersection(new Vector2(startx,starty),_world);
     }
 
     public GameElement get(int x, int y) { return this._laby2[x][y]; }
@@ -121,45 +123,52 @@ public class Maze implements Iterable<GameElement>{
             ((GameElement) it.next()).marquer(marque);
     }
 
-    public LinkedList parcoursEnLargeur(GameElement depart) {
+    public LinkedList parcoursEnLargeur(GameElement depart,GameElement arrivee) {
         marquerTousLesSommets(0);
         LinkedList file = new LinkedList();
         LinkedList chemin = new LinkedList();
+        HashMap<GameElement,GameElement> liste=new  HashMap<GameElement,GameElement>();
+        liste.put(depart,null);
         depart.marquer(1);
+        GameElement elementArrivee=get((int)arrivee._pos.x,(int)arrivee._pos.y);
         file.addLast(depart);
         while (file.size() > 0) {
             GameElement u = (GameElement) file.removeFirst();
-            chemin.add(u);
             ArrayList<GameElement> v= sommetsVoisins(u);
             for (int i=0;i<v.size();i++){
                 if (v.get(i).marque == 0) {
+                    liste.put(v.get(i),u);
                     v.get(i).marquer(1);
-                    System.out.println(v.get(i));
                     file.addLast(v.get(i));
                 }
             }
             u.marquer(2);
         }
+        while (liste.get(elementArrivee)!=null){
+            elementArrivee=liste.get(elementArrivee);
+            chemin.addFirst(elementArrivee);
+        }
+        chemin.addFirst(depart);
         return chemin;
     }
 
     public ArrayList<GameElement> sommetsVoisins(GameElement s) {
         ArrayList<GameElement> liste=new ArrayList<GameElement>();
-        GameElement geUp = _world.getMaze().get((int)s._pos.x, (int) s._pos.y + 1);
-        GameElement geDown = _world.getMaze().get((int) s._pos.x, (int) s._pos.y - 1);
-        GameElement geRight = _world.getMaze().get((int) s._pos.x + 1, (int) s._pos.y);
-        GameElement geLeft = _world.getMaze().get((int) s._pos.x - 1, (int) s._pos.y);
+        GameElement geUp = get((int)s._pos.x, (int) s._pos.y + 1);
+        GameElement geDown = get((int) s._pos.x, (int) s._pos.y - 1);
+        GameElement geRight = get((int) s._pos.x + 1, (int) s._pos.y);
+        GameElement geLeft = get((int) s._pos.x - 1, (int) s._pos.y);
 
-        if(!(geUp instanceof Block)){
+        if(!(geUp instanceof Block || geUp instanceof Barriere)){
             liste.add(geUp);
         }
-        if(!(geDown instanceof Block)){
+        if(!(geDown instanceof Block || geDown instanceof Barriere)){
             liste.add(geDown);
         }
-        if(!(geLeft instanceof Block)){
+        if(!(geLeft instanceof Block || geLeft instanceof Barriere)){
             liste.add(geLeft);
         }
-        if(!(geRight instanceof Block)){
+        if(!(geRight instanceof Block || geRight instanceof Barriere)){
             liste.add(geRight);
         }
         return liste;
