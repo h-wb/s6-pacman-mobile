@@ -81,19 +81,14 @@ public class WorldRenderer {
         Vector2 pos=this.world.getPacman().getPosition();
         if(pos.x%1==0&&pos.y%1==0) {
             GameElement ge=this.world.getMaze().get((int)pos.x, (int)pos.y);
-            if(ge instanceof Super || ge instanceof IntersectionPellet) {
+            if(ge instanceof Super || ge instanceof IntersectionPellet || ge instanceof Pellet) {
                 if(ge instanceof Super) {
                     invincibilite();
                 }
-                this.world.getMaze().set((int)pos.x, (int)pos.y,new Intersection(new Vector2((int)pos.x,(int)pos.y),this.world));
-                this.score+=10;
-            }
-            else if(ge instanceof Pellet) {
-                this.world.getMaze().set((int)pos.x, (int)pos.y,new Vide(new Vector2((int)pos.x,(int)pos.y),this.world));
+                world.getMaze().mange(ge);
                 this.score+=10;
             }
         }
-
 
         if(this.world.getGhost1().getEscape()|| this.world.getGhost2().getEscape() || this.world.getGhost3().getEscape() || this.world.getGhost4().getEscape()) {
             checkInvincibiliteTime(delta);
@@ -174,10 +169,10 @@ public class WorldRenderer {
     /*****Methoqe qui initialise les déplacements de chaque MoveableElement*****/
     private void deplacement(){
         this.world.getPacman().deplacement();
-        this.world.getGhost1().deplacement();
+      /*  this.world.getGhost1().deplacement();
         this.world.getGhost2().deplacement();
         this.world.getGhost3().deplacement();
-        this.world.getGhost4().deplacement();
+        this.world.getGhost4().deplacement();*/
     }
 
     /*****Methoqe qui initialise les animations*****/
