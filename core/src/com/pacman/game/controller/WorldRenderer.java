@@ -52,7 +52,7 @@ public class WorldRenderer {
 
     /*****PARAMETRES DE JEU*****/
     private int invincibiliteTime = 5; //en secondes : temps d'invicibilité de Pacman après avoir mangé une super pac-gomme
-    private int barriereTime = 1000; //en secondes : temps avec que la barrière disparaisse
+    private int barriereTime = 1; //en secondes : temps avec que la barrière disparaisse
     private float fantomeEscapeVitesse = 0.05f;
     private float fantomeMortVitesse = 0.2f;
     private int clignoteTime = 2;

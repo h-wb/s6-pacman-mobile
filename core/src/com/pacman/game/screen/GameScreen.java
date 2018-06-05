@@ -22,13 +22,10 @@ public class GameScreen implements Screen {
     private Game _game;
    private  GestureDetector.GestureListener listener;
 
-    public GameScreen(PacmanGame game) {
+    public GameScreen(PacmanGame game, InputMultiplexer im, World world) {
         this._game = game;
-        this._world = new World();
+        this._world = world;
         this._worldRenderer = new WorldRenderer(this._world, this._game);
-        InputMultiplexer im = new InputMultiplexer();
-        im.addProcessor(new GestureDetector(new DirectionListener(this._world)));
-        im.addProcessor(new Listener(this._world));
         Gdx.input.setInputProcessor(im);
     }
 
