@@ -146,7 +146,7 @@ public class Maze implements Iterable<GameElement>{
             ((GameElement) it.next()).marquer(marque);
     }
 
-    public LinkedList parcoursEnLargeur(GameElement depart,GameElement arrivee) {
+    public LinkedList parcoursEnLargeur(GameElement depart,GameElement arrivee,Boolean avecBarriere) {
         marquerTousLesSommets(0);
         LinkedList file = new LinkedList();
         LinkedList chemin = new LinkedList();
@@ -157,7 +157,13 @@ public class Maze implements Iterable<GameElement>{
         file.addLast(depart);
         while (file.size() > 0) {
             GameElement u = (GameElement) file.removeFirst();
-            ArrayList<GameElement> v= sommetsVoisins(u);
+            ArrayList<GameElement> v;
+            if(avecBarriere){
+                v = sommetsVoisinsBarriere(u);
+            }
+            else{
+                v = sommetsVoisins(u);
+            }
             for (int i=0;i<v.size();i++){
                 if (v.get(i).marque == 0) {
                     liste.put(v.get(i),u);
@@ -201,6 +207,38 @@ public class Maze implements Iterable<GameElement>{
             liste.add(geLeft);
         }
         if(geRight!=null &&!(geRight instanceof Block || geRight instanceof Barriere)){
+            liste.add(geRight);
+        }
+
+        return liste;
+    }
+
+    public ArrayList<GameElement> sommetsVoisinsBarriere(GameElement s) {
+        ArrayList<GameElement> liste=new ArrayList<GameElement>();
+        GameElement geUp = null,geDown=null,geLeft=null,geRight=null;
+        if(s._pos.y + 1<getHeight()){
+            geUp = get((int)s._pos.x, (int) s._pos.y + 1);
+        }
+        if(s._pos.y - 1>=0){
+            geDown = get((int) s._pos.x, (int) s._pos.y - 1);
+        }
+        if(s._pos.x + 1<getWidth()){
+            geRight = get((int) s._pos.x + 1, (int) s._pos.y);
+        }
+        if(s._pos.y - 1>=0){
+            geLeft = get((int) s._pos.x - 1, (int) s._pos.y);
+        }
+
+        if(geUp!=null && !(geUp instanceof Block)){
+            liste.add(geUp);
+        }
+        if(geDown!=null &&!(geDown instanceof Block)){
+            liste.add(geDown);
+        }
+        if(geLeft!=null &&!(geLeft instanceof Block)){
+            liste.add(geLeft);
+        }
+        if(geRight!=null &&!(geRight instanceof Block)){
             liste.add(geRight);
         }
 
